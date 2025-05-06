@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EpicHammerSO
   m_EditorClassIdentifier: 
   itemType: 0
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: 1727890519378657548, guid: 8d79a896a6f014e4bb5f88a5bafb0e71, type: 3}
   itemRarityBG: {fileID: 6286595657586805340, guid: e302c3ee08a11c34fb812ef73a563d82, type: 3}
   itemDescription: 'Swings with freezing fury, reducing enemy defense and movement

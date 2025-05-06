@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LegendaryBookSO
   m_EditorClassIdentifier: 
   itemType: 3
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -589286909710154402, guid: 89d224381c4f24742a6fc37d370a38ba, type: 3}
   itemRarityBG: {fileID: -8923911374754931897, guid: 036188b131dfe574dbea4a7b5cc2fa5b, type: 3}
   itemDescription: Its pages radiate warmth, empowering your next attack with searing

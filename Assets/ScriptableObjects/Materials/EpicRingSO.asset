@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EpicRingSO
   m_EditorClassIdentifier: 
   itemType: 2
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -6219987016781107039, guid: 0eb4eef96d18e4c4a9adbe5a95ecc67e, type: 3}
   itemRarityBG: {fileID: 6286595657586805340, guid: e302c3ee08a11c34fb812ef73a563d82, type: 3}
   itemDescription: 'Reduces mana costs for spells and increases magical cooldown

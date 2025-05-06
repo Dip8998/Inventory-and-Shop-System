@@ -1,10 +1,11 @@
 using NUnit.Framework.Internal;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemSO", menuName = "Scriptable Objects/ItemSO")]
+[CreateAssetMenu(fileName = "ItemSO", menuName = "ScriptableObjects/ItemSO")]
 public class ItemSO : ScriptableObject
 {
     public ItemType itemType;
+    public GameObject itemPrefab;
     public Sprite itemSprite;
     public Sprite itemRarityBG;
     public string itemDescription;

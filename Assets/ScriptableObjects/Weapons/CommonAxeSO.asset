@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CommonAxeSO
   m_EditorClassIdentifier: 
   itemType: 0
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: 5200502052278722336, guid: 007063ace5f6cb24293f42a7dd1ccb46, type: 3}
   itemRarityBG: {fileID: -4987337320017983735, guid: 21e5ab86491432e42949141ff13b5dd0, type: 3}
   itemDescription: 'A rugged axe common among village warriors, it delivers reliable

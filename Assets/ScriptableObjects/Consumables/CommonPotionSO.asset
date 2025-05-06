@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CommonPotionSO
   m_EditorClassIdentifier: 
   itemType: 1
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -8146800125803065681, guid: 72fb0a31d606ab34092dcbc9bbf44d1f, type: 3}
   itemRarityBG: {fileID: -4987337320017983735, guid: 21e5ab86491432e42949141ff13b5dd0, type: 3}
   itemDescription: Refills mana quickly and increases magic power temporarily.

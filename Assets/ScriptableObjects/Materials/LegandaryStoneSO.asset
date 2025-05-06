@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LegandaryStoneSO
   m_EditorClassIdentifier: 
   itemType: 2
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -8676153382321071658, guid: dce9cd6fce4e65547b9b6ff26b7d7361, type: 3}
   itemRarityBG: {fileID: -8923911374754931897, guid: 036188b131dfe574dbea4a7b5cc2fa5b, type: 3}
   itemDescription: 'Strengthens summoned creatures and increases summoning duration.  '

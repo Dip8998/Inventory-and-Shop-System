@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EpicScrollSO
   m_EditorClassIdentifier: 
   itemType: 3
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -639904019762863508, guid: aa9788f66ec67bb46a4f004b0077dbc4, type: 3}
   itemRarityBG: {fileID: 6286595657586805340, guid: e302c3ee08a11c34fb812ef73a563d82, type: 3}
   itemDescription: This scroll releases a soothing breeze that wraps around the reader,

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MAGIC BOOK 3_0: 2290617275832431799
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

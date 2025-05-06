@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: VeryCommonBookSO
   m_EditorClassIdentifier: 
   itemType: 3
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -8562085758611138375, guid: 3de143eebd3271640a61f8b5ff333cfe, type: 3}
   itemRarityBG: {fileID: -1222084528289432348, guid: 57b5b8dca05ae554599dc7379df088ac, type: 3}
   itemDescription: Bound in midnight leather, this cryptic tome murmurs secrets that

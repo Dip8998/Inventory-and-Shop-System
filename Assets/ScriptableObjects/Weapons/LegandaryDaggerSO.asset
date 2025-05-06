@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LegandaryDaggerSO
   m_EditorClassIdentifier: 
   itemType: 0
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -1709084190045883061, guid: 44df6380050ee194ca610e9afec24ea9, type: 3}
   itemRarityBG: {fileID: -8923911374754931897, guid: 036188b131dfe574dbea4a7b5cc2fa5b, type: 3}
   itemDescription: A rare artifact that lets the wielder teleport a short distance

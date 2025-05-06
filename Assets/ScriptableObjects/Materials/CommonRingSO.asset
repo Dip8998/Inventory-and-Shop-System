@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CommonRingSO
   m_EditorClassIdentifier: 
   itemType: 2
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -8679868968155380700, guid: c445cc206b9a3d645b44fccb9f4f6898, type: 3}
   itemRarityBG: {fileID: -4987337320017983735, guid: 21e5ab86491432e42949141ff13b5dd0, type: 3}
   itemDescription: 'Increases melee damage and reduces stamina drain from attacks.  '

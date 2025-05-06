@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
+  m_Name: RarePotionSO
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemSprite: {fileID: -4297813287338518310, guid: b828c365474150f4082f757c6c5510f3, type: 3}
+  itemRarityBG: {fileID: -6429493399158520243, guid: 34f0dbae3af883744910117ed8ac1f4d, type: 3}
+  itemDescription: Doubles movement and attack speed for 10 seconds, but drains stamina
+    afterward.
+  itemBuyingPrice: 200
+  itemSellingPrice: 100
+  itemWeight: 9
+  itemRarity: 2
+  itemQuantity: 6

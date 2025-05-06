@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
+  m_Name: LegandaryDaggerSO
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemSprite: {fileID: -1709084190045883061, guid: 44df6380050ee194ca610e9afec24ea9, type: 3}
+  itemRarityBG: {fileID: -8923911374754931897, guid: 036188b131dfe574dbea4a7b5cc2fa5b, type: 3}
+  itemDescription: A rare artifact that lets the wielder teleport a short distance
+    after striking.
+  itemBuyingPrice: 600
+  itemSellingPrice: 300
+  itemWeight: 30
+  itemRarity: 4
+  itemQuantity: 2

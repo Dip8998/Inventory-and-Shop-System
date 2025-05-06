@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
+  m_Name: CommonRingSO
+  m_EditorClassIdentifier: 
+  itemType: 2
+  itemSprite: {fileID: -8679868968155380700, guid: c445cc206b9a3d645b44fccb9f4f6898, type: 3}
+  itemRarityBG: {fileID: -4987337320017983735, guid: 21e5ab86491432e42949141ff13b5dd0, type: 3}
+  itemDescription: 'Increases melee damage and reduces stamina drain from attacks.  '
+  itemBuyingPrice: 200
+  itemSellingPrice: 100
+  itemWeight: 10
+  itemRarity: 1
+  itemQuantity: 8

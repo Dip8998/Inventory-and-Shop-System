@@ -11,6 +11,7 @@ public class InventoryModel
     public void AddItem(ItemSO itemSO)
     {
         items.Add(new ItemModel(itemSO));
+        inventoryController.UpdateInventoryView();
     }
 
     public void SetInventoryController(InventoryController controller)

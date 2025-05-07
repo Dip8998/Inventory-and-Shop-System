@@ -16,5 +16,26 @@ public class InventoryController
 
         inventoryModel.SetInventoryController(this);
         inventoryView.SetController(this);
+
+        inventoryView.UpdateInventoryUI(inventoryModel.GetItems());
+    }
+
+    public void GatherResources()
+    {
+        if (allItemsList != null && allItemsList.items.Count > 0)
+        {
+            int randomIndex = Random.Range(0, allItemsList.items.Count);
+            ItemSO gatheredItem = allItemsList.items[randomIndex];
+            inventoryModel.AddItem(gatheredItem);
+        }
+        else
+        {
+            Debug.Log("No items available to gather!");
+        }
+    }
+
+    public void UpdateInventoryView()
+    {
+        inventoryView.UpdateInventoryUI(inventoryModel.GetItems());
     }
 }

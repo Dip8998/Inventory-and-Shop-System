@@ -21,4 +21,19 @@ public class InventoryView : MonoBehaviour
         itemViewPrefab = prefab;
         uiService = ui;
     }
+
+    public void UpdateInventoryUI(List<ItemModel> items)
+    {
+        foreach (Transform child in inventoryItemContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (var itemModel in items)
+        {
+            ItemView itemViewInstance = Instantiate(itemViewPrefab, inventoryItemContainer);
+            ItemController itemController = new ItemController(itemModel, itemViewInstance, uiService);
+            itemViewInstance.SetController(itemController);
+        }
+    }
 }

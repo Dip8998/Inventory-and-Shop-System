@@ -14,7 +14,11 @@ public class InventoryManager : MonoBehaviour
     {
         inventoryModel = new InventoryModel();
         inventoryController = new InventoryController(inventoryModel, inventoryView, allGatherableItems);
-        inventoryView.InjectDependencies(itemView, uiService); 
+        inventoryView.InjectDependencies(itemView, uiService);
+
+        uiService.SetInventoryController(inventoryController);
+
+        inventoryView.UpdateInventoryUI(inventoryModel.GetItems());
     }
 
     public void OnGatherResourcesButtonClicked()

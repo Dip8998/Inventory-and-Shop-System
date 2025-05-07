@@ -24,16 +24,28 @@ public class InventoryView : MonoBehaviour
 
     public void UpdateInventoryUI(List<ItemModel> items)
     {
-        foreach (Transform child in inventoryItemContainer)
-        {
-            Destroy(child.gameObject);
-        }
+        UpdateInventory(items);
 
-        foreach (var itemModel in items)
+        uiService.UpdateWeightText();
+    }
+
+    private void UpdateInventory(List<ItemModel> items)
+    {
+        ClearAllItems();
+
+        foreach (ItemModel itemModel in items)
         {
             ItemView itemViewInstance = Instantiate(itemViewPrefab, inventoryItemContainer);
             ItemController itemController = new ItemController(itemModel, itemViewInstance, uiService);
             itemViewInstance.SetController(itemController);
+        }
+    }
+
+    private void ClearAllItems()
+    {
+        foreach (Transform child in inventoryItemContainer)
+        {
+            Destroy(child.gameObject);
         }
     }
 }

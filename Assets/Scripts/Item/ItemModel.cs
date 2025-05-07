@@ -26,4 +26,6 @@ public class ItemModel
         weight = itemSO.itemWeight;
         quantity = itemSO.itemQuantity;
     }
+
+    public ItemSO GetItem() => itemSO;
 }

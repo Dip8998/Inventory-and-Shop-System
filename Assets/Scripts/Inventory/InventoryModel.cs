@@ -5,17 +5,28 @@ public class InventoryModel
 {
     private InventoryController inventoryController;
     private List<ItemModel> items = new List<ItemModel>();
+    private int maxWeight = 200;
+    private int totalWeight;
 
     public List<ItemModel> GetItems() => items;
-
-    public void AddItem(ItemSO itemSO)
-    {
-        items.Add(new ItemModel(itemSO));
-        inventoryController.UpdateInventoryView();
-    }
 
     public void SetInventoryController(InventoryController controller)
     {
         inventoryController = controller;
+    }
+
+    public int GetMaxWeight()
+    {
+        return maxWeight;
+    }
+
+    public int GetTotalWeight()
+    {
+        return totalWeight;
+    }
+
+    public void IncreaseTotalWeight(int additionalWeight)
+    {
+        totalWeight += additionalWeight;
     }
 }

@@ -7,90 +7,47 @@ public class UIService : MonoBehaviour
 {
     [SerializeField] private ItemListSO itemList;
     [SerializeField] private Transform itemContainer;
-    [SerializeField] private GameObject itemContainerPrefab;
-    
+    [SerializeField] private ItemService itemService;    
 
-    public void GetAllItems()
-    {
-        clearAllItems();
-        for (int i = 0; i < itemList.items.Count; i++)
-        {
-            itemContainerPrefab.transform.GetChild(0).GetComponent<Image>().sprite = itemList.items[i].itemRarityBG;
-            itemContainerPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemList.items[i].itemQuantity.ToString();
-            itemContainerPrefab.transform.GetChild(2).GetComponent<Image>().sprite = itemList.items[i].itemSprite;
-            GameObject item = Instantiate(itemContainerPrefab, itemContainer);
-        }
-    }
+    public void GetAllItems() => DisplayItems();
 
-    public void GetWeaponItems()
-    {
-        clearAllItems();
+    public void GetWeaponItems() => DisplayItems(ItemType.Weapons);
 
-        for (int i = 0; i < itemList.items.Count; i++)
-        {
-            if(itemList.items[i].itemType == ItemType.Weapons)
-            {
-                itemContainerPrefab.transform.GetChild(0).GetComponent<Image>().sprite = itemList.items[i].itemRarityBG;
-                itemContainerPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemList.items[i].itemQuantity.ToString();
-                itemContainerPrefab.transform.GetChild(2).GetComponent<Image>().sprite = itemList.items[i].itemSprite;
-                GameObject item = Instantiate(itemContainerPrefab, itemContainer);
-            }
-        }
-    }
+    public void GetConsumableItems() => DisplayItems(ItemType.Consumables);
 
-    public void GetConsumableItems()
-    {
-        clearAllItems();
+    public void GetMaterialItems() => DisplayItems(ItemType.Materials);
 
-        for (int i = 0; i < itemList.items.Count; i++)
-        {
-            if (itemList.items[i].itemType == ItemType.Consumables)
-            {
-                itemContainerPrefab.transform.GetChild(0).GetComponent<Image>().sprite = itemList.items[i].itemRarityBG;
-                itemContainerPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemList.items[i].itemQuantity.ToString();
-                itemContainerPrefab.transform.GetChild(2).GetComponent<Image>().sprite = itemList.items[i].itemSprite;
-                GameObject item = Instantiate(itemContainerPrefab, itemContainer);
-            }
-        }
-    }
-
-    public void GetMaterialItems()
-    {
-        clearAllItems();
-
-        for (int i = 0; i < itemList.items.Count; i++)
-        {
-            if (itemList.items[i].itemType == ItemType.Materials)
-            {
-                itemContainerPrefab.transform.GetChild(0).GetComponent<Image>().sprite = itemList.items[i].itemRarityBG;
-                itemContainerPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemList.items[i].itemQuantity.ToString();
-                itemContainerPrefab.transform.GetChild(2).GetComponent<Image>().sprite = itemList.items[i].itemSprite;
-                GameObject item = Instantiate(itemContainerPrefab, itemContainer);
-            }
-        }
-    }
-
-    public void GetTreasureItems()
-    {
-        clearAllItems();
-
-        for (int i = 0; i < itemList.items.Count; i++)
-        {
-            if (itemList.items[i].itemType == ItemType.Treasures)
-            {
-                itemContainerPrefab.transform.GetChild(0).GetComponent<Image>().sprite = itemList.items[i].itemRarityBG;
-                itemContainerPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemList.items[i].itemQuantity.ToString();
-                itemContainerPrefab.transform.GetChild(2).GetComponent<Image>().sprite = itemList.items[i].itemSprite;
-                GameObject item = Instantiate(itemContainerPrefab, itemContainer);
-            }
-        }
-    }
+    public void GetTreasureItems() => DisplayItems(ItemType.Treasures);
 
     public void clearAllItems()
     {
         foreach (Transform child in itemContainer)
         {
             Destroy(child.gameObject);
+        }
+    }
+
+    public void DisplayItems(ItemType? itemType = null)
+    {
+        clearAllItems();
+
+        foreach(ItemSO item in itemList.items)
+        {
+            if (itemType != null && item.itemType != itemType.Value)
+                continue;
+
+            ItemService instance = Instantiate(itemService, itemContainer);
+            instance.Initialize(
+                item.itemSprite,
+                item.itemRarityBG,
+                item.itemType.ToString(),
+                item.itemDescription,
+                item.itemBuyingPrice,
+                item.itemSellingPrice,
+                item.itemRarity.ToString(),
+                item.itemWeight,
+                item.itemQuantity
+                );
         }
     }
 }

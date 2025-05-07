@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DAGGER 7_0: -1709084190045883061
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

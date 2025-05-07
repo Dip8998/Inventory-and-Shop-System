@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
+  m_Name: RareStoneSO
+  m_EditorClassIdentifier: 
+  itemType: 2
+  itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
+  itemSprite: {fileID: -6366920310195218126, guid: 7bcddeb8f9e48fe448bf02cfc02dfce2, type: 3}
+  itemRarityBG: {fileID: -6429493399158520243, guid: 34f0dbae3af883744910117ed8ac1f4d, type: 3}
+  itemDescription: 'Socketed gear gains fire-based damage and minor burn-over-time
+    effects.  '
+  itemBuyingPrice: 250
+  itemSellingPrice: 125
+  itemWeight: 15
+  itemRarity: 2
+  itemQuantity: 6

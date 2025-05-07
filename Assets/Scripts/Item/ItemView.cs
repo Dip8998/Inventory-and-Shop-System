@@ -18,12 +18,6 @@ public class ItemView : MonoBehaviour
     private Button thisButton;
     private ItemController itemController;
 
-    private void Start()
-    {
-        thisButton = GetComponent<Button>();
-        thisButton.onClick.AddListener(itemController.ShowItemDetails);
-    }
-
     public void UpdateView(ItemModel model)
     {
         itemImage.sprite = model.itemSprite;

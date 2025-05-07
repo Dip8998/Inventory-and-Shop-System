@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UIService : MonoBehaviour
 {
     [SerializeField] private GameObject itemDetailsPanel;
-    [SerializeField] private ItemManager itemManager;
     private ItemModel itemModel;
 
     [Header("UI Elements")]
@@ -35,14 +34,4 @@ public class UIService : MonoBehaviour
 
         itemDetailsPanel.SetActive(true);
     }
-
-    public void GetAllItems() => itemManager.DisplayItems();
-
-    public void GetWeaponItems() => itemManager.DisplayItems(ItemType.Weapons);
-
-    public void GetConsumableItems() => itemManager.DisplayItems(ItemType.Consumables);
-
-    public void GetMaterialItems() => itemManager.DisplayItems(ItemType.Materials);
-
-    public void GetTreasureItems() => itemManager.DisplayItems(ItemType.Treasures);
 }

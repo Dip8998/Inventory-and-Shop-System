@@ -353,9 +353,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1158104473}
-        m_TargetAssemblyTypeName: UIService, Assembly-CSharp
-        m_MethodName: GetMaterialItems
+      - m_Target: {fileID: 386460207}
+        m_TargetAssemblyTypeName: ShopView, Assembly-CSharp
+        m_MethodName: OnShowMaterialItemsButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -486,9 +486,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1158104473}
-        m_TargetAssemblyTypeName: UIService, Assembly-CSharp
-        m_MethodName: GetTreasureItems
+      - m_Target: {fileID: 386460207}
+        m_TargetAssemblyTypeName: ShopView, Assembly-CSharp
+        m_MethodName: OnShowTreasureItemsButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -683,6 +683,7 @@ GameObject:
   - component: {fileID: 386460204}
   - component: {fileID: 386460206}
   - component: {fileID: 386460205}
+  - component: {fileID: 386460207}
   m_Layer: 5
   m_Name: ShopPanel
   m_TagString: Untagged
@@ -748,6 +749,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386460203}
   m_CullTransparentMesh: 1
+--- !u!114 &386460207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386460203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88c4bb712e09e734c968a17c1e9ca814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList: {fileID: 11400000, guid: 861188a4b74077e4886d7040050d2557, type: 2}
+  itemContainer: {fileID: 1246666585}
+  itemViewPrefab: {fileID: 8447594110628039026, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
+  uiService: {fileID: 1158104473}
 --- !u!1 &437085089
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,30 +774,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 437085091}
-  - component: {fileID: 437085090}
+  - component: {fileID: 437085093}
   m_Layer: 0
-  m_Name: ItemManager
+  m_Name: Shop Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &437085090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437085089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ef5eb773ab3704a922cdd334dcdefc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemListSO: {fileID: 11400000, guid: 861188a4b74077e4886d7040050d2557, type: 2}
-  itemView: {fileID: 8447594110628039026, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
-  itemUIService: {fileID: 1158104473}
-  itemContainer: {fileID: 1246666585}
 --- !u!4 &437085091
 Transform:
   m_ObjectHideFlags: 0
@@ -796,6 +797,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &437085093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437085089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685343415735c7743ac4e834b9542c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopView: {fileID: 386460207}
+  itemList: {fileID: 11400000, guid: 861188a4b74077e4886d7040050d2557, type: 2}
+  uiService: {fileID: 1158104473}
+  itemViewPrefab: {fileID: 8447594110628039026, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,9 +1496,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1158104473}
-        m_TargetAssemblyTypeName: UIService, Assembly-CSharp
-        m_MethodName: GetWeaponItems
+      - m_Target: {fileID: 386460207}
+        m_TargetAssemblyTypeName: ShopView, Assembly-CSharp
+        m_MethodName: OnShowWeaponItemsButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1788,7 +1805,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDetailsPanel: {fileID: 2504979085124598719}
-  itemManager: {fileID: 437085090}
   itemImage: {fileID: 9111520354927150741}
   itemRarityBG: {fileID: 3073174066523849151}
   itemName: {fileID: 6230539781407781656}
@@ -2307,9 +2323,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1158104473}
-        m_TargetAssemblyTypeName: UIService, Assembly-CSharp
-        m_MethodName: GetAllItems
+      - m_Target: {fileID: 386460207}
+        m_TargetAssemblyTypeName: ShopView, Assembly-CSharp
+        m_MethodName: OnShowAllItemsButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2848,9 +2864,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1158104473}
-        m_TargetAssemblyTypeName: UIService, Assembly-CSharp
-        m_MethodName: GetConsumableItems
+      - m_Target: {fileID: 386460207}
+        m_TargetAssemblyTypeName: ShopView, Assembly-CSharp
+        m_MethodName: OnShowConsumableItemsButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

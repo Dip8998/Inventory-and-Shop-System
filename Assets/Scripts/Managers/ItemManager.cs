@@ -7,33 +7,42 @@ using static UnityEditor.Progress;
 public class ItemManager : MonoBehaviour
 {
     public ItemListSO itemListScriptablObject;
-    public Transform inventoryContainer;
+    [SerializeField] private ItemService itemService;
+    [SerializeField] private Transform itemContainer;
 
-    private void Start()
-    {
-        initialize();
-    }
 
-    public void initialize()
+    public void DisplayItems(ItemType? itemType = null)
     {
+        clearAllItems();
+
         List<ItemSO> randomItems = new List<ItemSO>(itemListScriptablObject.items);
         ShuffleList(randomItems);
 
-        foreach (ItemSO itemData in randomItems)
+        foreach (ItemSO item in itemListScriptablObject.items)
         {
-            if (itemData.itemPrefab == null)
-            {
-                Debug.LogWarning("Item prefab is null.");
+            if (itemType != null && item.itemType != itemType.Value)
                 continue;
-            }
 
-            GameObject itemPrefab = itemData.itemPrefab;
+            ItemService instance = Instantiate(itemService, itemContainer);
+            instance.Initialize(
+                item.itemSprite,
+                item.itemRarityBG,
+                item.itemType.ToString(),
+                item.itemDescription,
+                item.itemBuyingPrice,
+                item.itemSellingPrice,
+                item.itemRarity.ToString(),
+                item.itemWeight,
+                item.itemQuantity
+                );
+        }
+    }
 
-            itemPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemData.itemQuantity.ToString();
-            itemPrefab.transform.GetChild(2).GetComponent<Image>().sprite = itemData.itemSprite;
-            itemPrefab.transform.GetChild(0).GetComponent<Image>().sprite = itemData.itemRarityBG;
-
-            Instantiate(itemPrefab, inventoryContainer);
+    public void clearAllItems()
+    {
+        foreach (Transform child in itemContainer)
+        {
+            Destroy(child.gameObject);
         }
     }
 

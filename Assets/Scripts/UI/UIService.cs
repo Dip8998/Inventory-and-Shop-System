@@ -5,49 +5,15 @@ using UnityEngine.UI;
 
 public class UIService : MonoBehaviour
 {
-    [SerializeField] private ItemListSO itemList;
-    [SerializeField] private Transform itemContainer;
-    [SerializeField] private ItemService itemService;    
+    [SerializeField] private ItemManager itemManager;
 
-    public void GetAllItems() => DisplayItems();
+    public void GetAllItems() => itemManager.DisplayItems();
 
-    public void GetWeaponItems() => DisplayItems(ItemType.Weapons);
+    public void GetWeaponItems() => itemManager.DisplayItems(ItemType.Weapons);
 
-    public void GetConsumableItems() => DisplayItems(ItemType.Consumables);
+    public void GetConsumableItems() => itemManager.DisplayItems(ItemType.Consumables);
 
-    public void GetMaterialItems() => DisplayItems(ItemType.Materials);
+    public void GetMaterialItems() => itemManager.DisplayItems(ItemType.Materials);
 
-    public void GetTreasureItems() => DisplayItems(ItemType.Treasures);
-
-    public void clearAllItems()
-    {
-        foreach (Transform child in itemContainer)
-        {
-            Destroy(child.gameObject);
-        }
-    }
-
-    public void DisplayItems(ItemType? itemType = null)
-    {
-        clearAllItems();
-
-        foreach(ItemSO item in itemList.items)
-        {
-            if (itemType != null && item.itemType != itemType.Value)
-                continue;
-
-            ItemService instance = Instantiate(itemService, itemContainer);
-            instance.Initialize(
-                item.itemSprite,
-                item.itemRarityBG,
-                item.itemType.ToString(),
-                item.itemDescription,
-                item.itemBuyingPrice,
-                item.itemSellingPrice,
-                item.itemRarity.ToString(),
-                item.itemWeight,
-                item.itemQuantity
-                );
-        }
-    }
+    public void GetTreasureItems() => itemManager.DisplayItems(ItemType.Treasures);
 }

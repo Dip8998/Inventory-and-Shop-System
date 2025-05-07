@@ -719,8 +719,6 @@ MonoBehaviour:
   itemRarity: {fileID: 4503988754640237810}
   itemWeight: {fileID: 1517902506069328630}
   itemQuantity: {fileID: 4951103608551836211}
-  itemDetails: {fileID: 2794862261424188560, guid: 69497b182b4f88c42a687055e57916b3, type: 3}
-  itemCanvas: {fileID: 0}
 --- !u!1 &7009986814946062639
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,59 +1,43 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using static UnityEditor.Progress;
 
 public class ItemManager : MonoBehaviour
 {
-    public ItemListSO itemListScriptablObject;
-    [SerializeField] private ItemService itemService;
+    [SerializeField] private ItemListSO itemListSO;
+    [SerializeField] private ItemView itemView;
+    [SerializeField] private UIService itemUIService;
     [SerializeField] private Transform itemContainer;
 
-
-    public void DisplayItems(ItemType? itemType = null)
+    public void DisplayItems(ItemType? filterType = null)
     {
-        clearAllItems();
+        ClearItems();
 
-        List<ItemSO> randomItems = new List<ItemSO>(itemListScriptablObject.items);
-        ShuffleList(randomItems);
+        List<ItemSO> shuffledItems = new List<ItemSO>(itemListSO.items);
+        ShuffleList(shuffledItems);
 
-        foreach (ItemSO item in itemListScriptablObject.items)
+        foreach (ItemSO itemSO in shuffledItems)
         {
-            if (itemType != null && item.itemType != itemType.Value)
-                continue;
+            if (filterType != null && itemSO.itemType != filterType) continue;
 
-            ItemService instance = Instantiate(itemService, itemContainer);
-            instance.Initialize(
-                item.itemSprite,
-                item.itemRarityBG,
-                item.itemType.ToString(),
-                item.itemDescription,
-                item.itemBuyingPrice,
-                item.itemSellingPrice,
-                item.itemRarity.ToString(),
-                item.itemWeight,
-                item.itemQuantity
-                );
+            ItemModel model = new ItemModel(itemSO);
+            ItemView instance = GameObject.Instantiate(itemView,itemContainer);
+            ItemController controller = new ItemController(model,instance,itemUIService);
+            instance.SetController(controller);
         }
     }
 
-    public void clearAllItems()
+    private void ClearItems()
     {
         foreach (Transform child in itemContainer)
-        {
             Destroy(child.gameObject);
-        }
     }
 
     private void ShuffleList<T>(List<T> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
-            int randomIndex = Random.Range(i, list.Count);
-            T temp = list[i];
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
+            int randIndex = Random.Range(i, list.Count);
+            (list[i], list[randIndex]) = (list[randIndex], list[i]);
         }
     }
 }

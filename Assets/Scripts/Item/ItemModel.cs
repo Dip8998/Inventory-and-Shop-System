@@ -11,9 +11,11 @@ public class ItemModel
     public ItemRarity rarity;
     public int weight;
     public int quantity;
+    public ItemSO itemSO;
 
     public ItemModel(ItemSO itemSO)
     {
+        this.itemSO = itemSO;
         itemSprite = itemSO.itemSprite;
         itemRarityBG = itemSO.itemRarityBG;
         itemType = itemSO.itemType;

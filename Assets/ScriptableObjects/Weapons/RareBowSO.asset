@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: RareBowSO
   m_EditorClassIdentifier: 
+  itemID: WEAPON_003
   itemType: 0
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -539221710023876618, guid: af584674a653d394a91ccb8ab718a7ec, type: 3}

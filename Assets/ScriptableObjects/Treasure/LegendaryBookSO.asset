@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: LegendaryBookSO
   m_EditorClassIdentifier: 
+  itemID: TREASURE_005
   itemType: 3
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -589286909710154402, guid: 89d224381c4f24742a6fc37d370a38ba, type: 3}
@@ -20,6 +21,6 @@ MonoBehaviour:
     flame.
   itemBuyingPrice: 500
   itemSellingPrice: 250
-  itemWeight: 15
+  itemWeight: 11
   itemRarity: 4
   itemQuantity: 3

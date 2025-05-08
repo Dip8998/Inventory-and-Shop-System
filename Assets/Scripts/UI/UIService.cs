@@ -8,6 +8,8 @@ public class UIService : MonoBehaviour
     [SerializeField] private GameObject itemDetailsPanel;
     private ItemModel itemModel;
     private InventoryController inventoryController;
+    private ShopController shopController;
+    private ItemSO items;
 
     [Header("UI Elements")]
     [SerializeField] private Image itemImage;
@@ -42,6 +44,11 @@ public class UIService : MonoBehaviour
         float currentWeight = inventoryController.GetTotalWeight();
         float maxWeight = inventoryController.GetMaxInventoryWeight();
         weightText.text = $"Weight: {currentWeight}/{maxWeight} kg";
+    }
+
+    public void BuyButton() 
+    {
+        shopController.BuyItem(items);
     }
 
     public void SetInventoryController(InventoryController controller)

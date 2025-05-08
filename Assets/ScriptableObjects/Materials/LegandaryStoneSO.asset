@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: LegandaryStoneSO
   m_EditorClassIdentifier: 
+  itemID: MATERIAL_005
   itemType: 2
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -8676153382321071658, guid: dce9cd6fce4e65547b9b6ff26b7d7361, type: 3}
@@ -19,6 +20,6 @@ MonoBehaviour:
   itemDescription: 'Strengthens summoned creatures and increases summoning duration.  '
   itemBuyingPrice: 600
   itemSellingPrice: 300
-  itemWeight: 25
+  itemWeight: 10
   itemRarity: 4
   itemQuantity: 2

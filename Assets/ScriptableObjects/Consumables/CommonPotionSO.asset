@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: CommonPotionSO
   m_EditorClassIdentifier: 
+  itemID: CONSUMABLE_002
   itemType: 1
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -8146800125803065681, guid: 72fb0a31d606ab34092dcbc9bbf44d1f, type: 3}
@@ -19,6 +20,6 @@ MonoBehaviour:
   itemDescription: Refills mana quickly and increases magic power temporarily.
   itemBuyingPrice: 100
   itemSellingPrice: 50
-  itemWeight: 6
+  itemWeight: 3
   itemRarity: 1
   itemQuantity: 8

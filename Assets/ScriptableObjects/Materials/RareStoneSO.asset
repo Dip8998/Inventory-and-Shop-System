@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: RareStoneSO
   m_EditorClassIdentifier: 
+  itemID: MATERIAL_003
   itemType: 2
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -6366920310195218126, guid: 7bcddeb8f9e48fe448bf02cfc02dfce2, type: 3}
@@ -20,6 +21,6 @@ MonoBehaviour:
     effects.  '
   itemBuyingPrice: 250
   itemSellingPrice: 125
-  itemWeight: 15
+  itemWeight: 6
   itemRarity: 2
   itemQuantity: 6

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: VeryCommonPotionSO
   m_EditorClassIdentifier: 
+  itemID: CONSUMABLE_001
   itemType: 1
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -6608881160131599908, guid: 1d637cdf3562ae748b5d04a24f4be064, type: 3}
@@ -20,6 +21,6 @@ MonoBehaviour:
     regeneration for 5 seconds.  '
   itemBuyingPrice: 50
   itemSellingPrice: 25
-  itemWeight: 3
+  itemWeight: 1
   itemRarity: 0
   itemQuantity: 10

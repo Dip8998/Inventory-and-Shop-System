@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: LegandaryPotionSO
   m_EditorClassIdentifier: 
+  itemID: CONSUMABLE_005
   itemType: 1
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: 1007804309772471243, guid: 6d67133758197344c84ecaf2afa248df, type: 3}
@@ -20,6 +21,6 @@ MonoBehaviour:
     duration.
   itemBuyingPrice: 400
   itemSellingPrice: 200
-  itemWeight: 15
+  itemWeight: 9
   itemRarity: 4
   itemQuantity: 2

@@ -5,11 +5,15 @@ public class ShopController
 {
     private ShopModel shopModel;
     private ShopView shopView;
+    private InventoryController inventoryController;
+    private CurrencyManager currencyController; 
 
-    public ShopController(ShopModel model, ShopView view)
-    {
+    public ShopController(ShopModel model, ShopView view, InventoryController inventoryController, CurrencyManager currencyController) 
+    { 
         shopModel = model;
         shopView = view;
+        this.inventoryController = inventoryController;
+        this.currencyController = currencyController; 
 
         shopModel.SetShopController(this);
         shopView.SetController(this);
@@ -17,9 +21,8 @@ public class ShopController
 
     public void ShowAllItems(ItemType? filterType = null)
     {
-        List<ItemSO> items = shopModel.GetAllItems();
+        List<ItemSO> items = shopModel.GetAllShopItems();
         ShuffleList(items);
-
         ClearAllItems();
 
         foreach (ItemSO itemSO in items)
@@ -30,6 +33,16 @@ public class ShopController
             ItemView viewInstance = GameObject.Instantiate(shopView.GetItemViewPrefab(), shopView.GetItemContainer());
             ItemController itemController = new ItemController(itemModel, viewInstance, shopView.GetUIService());
             viewInstance.SetController(itemController);
+        }
+    }
+
+    public void BuyItem(ItemSO itemToBuy)
+    {
+        if (currencyController.GetCurrentCurrency() >= itemToBuy.itemBuyingPrice)
+        {
+            currencyController.RemoveCurrency(itemToBuy.itemBuyingPrice);
+            shopModel.RemoveShopItem(itemToBuy.itemID); 
+            ShowAllItems(shopView.GetCurrentFilter());
         }
     }
 

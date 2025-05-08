@@ -6,18 +6,36 @@ public class ShopModel
 
     private ItemListSO itemListSO;
 
+    private List<ItemSO> displayedItemInShop = new List<ItemSO>();
+
     public ShopModel(ItemListSO inventorySO)
     {
         itemListSO = inventorySO;
-    }
-
-    public List<ItemSO> GetAllItems()
-    {
-        return itemListSO.items;
+        displayedItemInShop = new List<ItemSO>(itemListSO.items);
     }
 
     public void SetShopController(ShopController controller)
     {
         shopController = controller;
+    }
+
+    public List<ItemSO> GetAllShopItems() => displayedItemInShop;
+
+    public ItemSO GetShopItemByID(string id)
+    {
+        return displayedItemInShop.Find(item => item.itemID == id);
+    }
+
+    public void RemoveShopItem(string id)
+    {
+        displayedItemInShop.RemoveAll(item => item.itemID == id);
+    }
+
+    public void AddShopItem(ItemSO itemToAdd)
+    {
+        if (!displayedItemInShop.Exists(i => i.itemID == itemToAdd.itemID))
+        {
+            displayedItemInShop.Add(itemToAdd);
+        }
     }
 }

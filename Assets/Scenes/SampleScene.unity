@@ -1202,9 +1202,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopView: {fileID: 386460207}
+  inventoryView: {fileID: 132568372}
   itemList: {fileID: 11400000, guid: 861188a4b74077e4886d7040050d2557, type: 2}
   uiService: {fileID: 1158104473}
   itemViewPrefab: {fileID: 8447594110628039026, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
+  currencyManager: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,11 +2340,11 @@ RectTransform:
   - {fileID: 1063213058}
   - {fileID: 386460204}
   - {fileID: 132568369}
-  - {fileID: 2542229535116152216}
   - {fileID: 1980407380}
   - {fileID: 1326875277}
   - {fileID: 601388121}
   - {fileID: 187242292}
+  - {fileID: 2542229535116152216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2835,6 +2837,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1617295877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1617295879}
+  - component: {fileID: 1617295878}
+  m_Layer: 0
+  m_Name: CurrencyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1617295878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617295877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f2bcdbfe0252d4b866dbf9f96d4053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currencyText: {fileID: 1980407381}
+--- !u!4 &1617295879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617295877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1711033600
 GameObject:
   m_ObjectHideFlags: 0
@@ -5315,7 +5362,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6591187256611744525}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1158104473}
+        m_TargetAssemblyTypeName: UIService, Assembly-CSharp
+        m_MethodName: BuyButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &6745470872827538396
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5906,3 +5965,4 @@ SceneRoots:
   - {fileID: 1380230755}
   - {fileID: 437085091}
   - {fileID: 1022792678}
+  - {fileID: 1617295879}

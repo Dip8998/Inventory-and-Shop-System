@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: LegandaryDaggerSO
   m_EditorClassIdentifier: 
+  itemID: WEAPON_005
   itemType: 0
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -1709084190045883061, guid: 44df6380050ee194ca610e9afec24ea9, type: 3}
@@ -22,4 +23,4 @@ MonoBehaviour:
   itemSellingPrice: 300
   itemWeight: 30
   itemRarity: 4
-  itemQuantity: 2
+  itemQuantity: 30

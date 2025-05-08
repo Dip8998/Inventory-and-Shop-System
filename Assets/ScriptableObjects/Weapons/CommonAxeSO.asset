@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: CommonAxeSO
   m_EditorClassIdentifier: 
+  itemID: WEAPON_002
   itemType: 0
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: 5200502052278722336, guid: 007063ace5f6cb24293f42a7dd1ccb46, type: 3}
@@ -22,4 +23,4 @@ MonoBehaviour:
   itemSellingPrice: 100
   itemWeight: 10
   itemRarity: 1
-  itemQuantity: 4
+  itemQuantity: 30

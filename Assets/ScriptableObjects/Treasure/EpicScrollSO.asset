@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: EpicScrollSO
   m_EditorClassIdentifier: 
+  itemID: TREASURE_004
   itemType: 3
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -639904019762863508, guid: aa9788f66ec67bb46a4f004b0077dbc4, type: 3}
@@ -20,6 +21,6 @@ MonoBehaviour:
     gently knitting wounds over time.
   itemBuyingPrice: 400
   itemSellingPrice: 200
-  itemWeight: 12
+  itemWeight: 9
   itemRarity: 3
-  itemQuantity: 6
+  itemQuantity: 30

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: RareBookSO
   m_EditorClassIdentifier: 
+  itemID: TREASURE_003
   itemType: 3
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: 2290617275832431799, guid: 44ee8e9ba4d28544e81713dcbc6ceb6b, type: 3}
@@ -20,6 +21,6 @@ MonoBehaviour:
     you, freezing enemies in sluggish motion.
   itemBuyingPrice: 300
   itemSellingPrice: 150
-  itemWeight: 9
+  itemWeight: 7
   itemRarity: 2
-  itemQuantity: 9
+  itemQuantity: 30

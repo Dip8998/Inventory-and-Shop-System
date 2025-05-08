@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07e59778fec66b40a35126eabf8493b, type: 3}
   m_Name: CommonScrollSO
   m_EditorClassIdentifier: 
+  itemID: TREASURE_002
   itemType: 3
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: 5266052673906671946, guid: 1bbfc5dcde5914f4ab7d6d1933a57c80, type: 3}
@@ -20,6 +21,6 @@ MonoBehaviour:
     to scorch enemies from afar.
   itemBuyingPrice: 200
   itemSellingPrice: 100
-  itemWeight: 6
+  itemWeight: 5
   itemRarity: 1
-  itemQuantity: 12
+  itemQuantity: 30

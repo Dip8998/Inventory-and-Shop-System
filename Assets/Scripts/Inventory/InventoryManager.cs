@@ -6,6 +6,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private ItemListSO allGatherableItems;
     [SerializeField] private UIService uiService;
     [SerializeField] private ItemView itemView;
+    [SerializeField] private CurrencyManager currencyManager;
 
     private InventoryModel inventoryModel;
     private InventoryController inventoryController;
@@ -13,7 +14,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         inventoryModel = new InventoryModel();
-        inventoryController = new InventoryController(inventoryModel, inventoryView, allGatherableItems);
+        inventoryController = new InventoryController(inventoryModel, inventoryView, allGatherableItems, currencyManager);
         inventoryView.InjectDependencies(itemView, uiService);
 
         uiService.SetInventoryController(inventoryController);

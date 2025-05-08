@@ -43,9 +43,11 @@ public class InventoryView : MonoBehaviour
 
     private void ClearAllItems()
     {
-        foreach (Transform child in inventoryItemContainer)
-        {
-            Destroy(child.gameObject);
-        }
+        UIHelper.ClearContainerChildren(inventoryItemContainer);
+    }
+
+    public UIService GetUIService()
+    {
+        return uiService;
     }
 }

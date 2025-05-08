@@ -38,7 +38,7 @@ public class ItemView : MonoBehaviour
         if (thisButton == null)
             thisButton = GetComponent<Button>();
 
-        thisButton.onClick.RemoveAllListeners(); 
+        thisButton.onClick.RemoveAllListeners();
         thisButton.onClick.AddListener(itemController.ShowItemDetails);
     }
 }

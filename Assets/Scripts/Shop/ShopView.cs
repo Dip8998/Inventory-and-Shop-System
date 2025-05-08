@@ -10,7 +10,7 @@ public class ShopView : MonoBehaviour
     [SerializeField] private Transform itemContainer;
     [SerializeField] private ItemView itemViewPrefab;
     [SerializeField] private UIService uiService;
-
+    
     private ItemSO selectedItemToBuy;
     private ItemType? currentFilter;
 

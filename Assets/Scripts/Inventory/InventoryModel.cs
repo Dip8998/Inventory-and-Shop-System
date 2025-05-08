@@ -29,4 +29,14 @@ public class InventoryModel
     {
         totalWeight += additionalWeight;
     }
+    
+    public float GetCumulativeValue()
+    {
+        float cumulativeValue = 0;
+        foreach (ItemModel item in items)
+        {
+            cumulativeValue += item.buyingPrice;
+        }
+        return cumulativeValue;
+    }
 }

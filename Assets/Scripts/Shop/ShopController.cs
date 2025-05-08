@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopController
@@ -6,14 +7,14 @@ public class ShopController
     private ShopModel shopModel;
     private ShopView shopView;
     private InventoryController inventoryController;
-    private CurrencyManager currencyController; 
+    private CurrencyManager currencyManager;
 
-    public ShopController(ShopModel model, ShopView view, InventoryController inventoryController, CurrencyManager currencyController) 
-    { 
+    public ShopController(ShopModel model, ShopView view, InventoryController inventoryController, CurrencyManager currencyManager)
+    {
         shopModel = model;
         shopView = view;
         this.inventoryController = inventoryController;
-        this.currencyController = currencyController; 
+        this.currencyManager = currencyManager;
 
         shopModel.SetShopController(this);
         shopView.SetController(this);
@@ -21,43 +22,35 @@ public class ShopController
 
     public void ShowAllItems(ItemType? filterType = null)
     {
-        List<ItemSO> items = shopModel.GetAllShopItems();
-        ShuffleList(items);
+        List<ItemSO> allShopItems = shopModel.GetAllShopItems(); 
         ClearAllItems();
 
-        foreach (ItemSO itemSO in items)
+        foreach (ItemSO itemSO in allShopItems)
         {
             if (filterType != null && itemSO.itemType != filterType) continue;
 
-            ItemModel itemModel = new ItemModel(itemSO);
+            ItemModel itemModel = new ItemModel(itemSO, true);
+
             ItemView viewInstance = GameObject.Instantiate(shopView.GetItemViewPrefab(), shopView.GetItemContainer());
             ItemController itemController = new ItemController(itemModel, viewInstance, shopView.GetUIService());
             viewInstance.SetController(itemController);
+
+            ItemSO currentShopItemData = shopModel.GetShopItemByID(itemSO.itemID);
+            if (currentShopItemData != null)
+            {
+                ItemModel updatedItemModel = new ItemModel(currentShopItemData, true);
+                viewInstance.UpdateView(updatedItemModel); 
+            }
         }
     }
-
-    public void BuyItem(ItemSO itemToBuy)
-    {
-        if (currencyController.GetCurrentCurrency() >= itemToBuy.itemBuyingPrice)
-        {
-            currencyController.RemoveCurrency(itemToBuy.itemBuyingPrice);
-            shopModel.RemoveShopItem(itemToBuy.itemID); 
-            ShowAllItems(shopView.GetCurrentFilter());
-        }
-    }
-
     private void ClearAllItems()
     {
         foreach (Transform child in shopView.GetItemContainer())
             GameObject.Destroy(child.gameObject);
     }
 
-    private void ShuffleList<T>(List<T> list)
+    public ShopModel GetShopModel()
     {
-        for (int i = 0; i < list.Count; i++)
-        {
-            int randIndex = Random.Range(i, list.Count);
-            (list[i], list[randIndex]) = (list[randIndex], list[i]);
-        }
+        return shopModel;
     }
 }

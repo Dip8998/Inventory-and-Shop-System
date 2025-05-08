@@ -6,7 +6,7 @@ public class CurrencyManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currencyText;
     private int currentCurrency;
 
-    public void InitializeCurrency(int initialCurrency) 
+    public void InitializeCurrency(int initialCurrency)
     {
         currentCurrency = initialCurrency;
         UpdateCurrencyUI();
@@ -28,7 +28,7 @@ public class CurrencyManager : MonoBehaviour
         currentCurrency -= amount;
         if (currentCurrency < 0)
         {
-            currentCurrency = 0; 
+            currentCurrency = 0;
         }
         UpdateCurrencyUI();
     }
@@ -42,7 +42,7 @@ public class CurrencyManager : MonoBehaviour
     {
         if (currencyText != null)
         {
-            currencyText.text = currentCurrency.ToString();
+            currencyText.text = "Gold: " + currentCurrency.ToString();
         }
         else
         {

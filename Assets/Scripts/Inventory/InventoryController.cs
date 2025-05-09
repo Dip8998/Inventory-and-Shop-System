@@ -172,28 +172,15 @@ public class InventoryController
         currencyManager.AddCurrency(totalPrice);
         RemoveItem(itemToSell, uiService.selectedQuantity, totalWeightToRemove);
 
-        EventService.Instance.OnFeedbackTextRequestedEvent.InvokeEvent($"You gained {totalPrice} gold!"); 
+        EventService.Instance.OnFeedbackTextRequestedEvent.InvokeEvent($"You gained {totalPrice} gold!");
 
-        if (shopModel != null)
+        if (SoundService.Instance != null)
         {
-            ItemSO shopItemSO = allItemsList.items.Find(so => so.itemID == itemToSell.itemID);
-            if (shopItemSO != null)
-            {
-                ItemSO copiedItem = ScriptableObject.CreateInstance<ItemSO>();
-                copiedItem.itemID = shopItemSO.itemID;
-                copiedItem.itemType = shopItemSO.itemType;
-                copiedItem.itemSprite = shopItemSO.itemSprite;
-                copiedItem.itemRarityBG = shopItemSO.itemRarityBG;
-                copiedItem.itemDescription = shopItemSO.itemDescription;
-                copiedItem.itemBuyingPrice = shopItemSO.itemBuyingPrice;
-                copiedItem.itemSellingPrice = shopItemSO.itemSellingPrice;
-                copiedItem.itemWeight = shopItemSO.itemWeight;
-                copiedItem.itemRarity = shopItemSO.itemRarity;
-                copiedItem.itemQuantity = uiService.selectedQuantity;
-                copiedItem.itemPrefab = shopItemSO.itemPrefab;
-
-                shopModel.AddShopItem(copiedItem);
-            }
+            SoundService.Instance.Play(Sounds.COINCOLLECT);
+        }
+        else
+        {
+            Debug.LogWarning("SoundService Instance not found!");
         }
     }
 }

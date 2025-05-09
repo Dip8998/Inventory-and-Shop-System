@@ -160,6 +160,7 @@ public class InventoryController
     private void ShowItemDetails(ItemModel itemModel)
     {
         uiService.ShowItemDetails(itemModel);
+        EventService.Instance.OnItemButtonClickedEvent.InvokeEvent(itemModel);
     }
 
     private void ConfirmSellItem(ItemModel itemToSell)

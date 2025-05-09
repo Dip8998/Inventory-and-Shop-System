@@ -13,21 +13,25 @@ public class ShopModel
         displayedItemInShop = new List<ItemSO>();
         foreach (ItemSO itemSO in itemListSO.items)
         {
-            ItemSO copiedItem = ScriptableObject.CreateInstance<ItemSO>();
-            copiedItem.itemID = itemSO.itemID;
-            copiedItem.itemType = itemSO.itemType;
-            copiedItem.itemSprite = itemSO.itemSprite;
-            copiedItem.itemRarityBG = itemSO.itemRarityBG;
-            copiedItem.itemDescription = itemSO.itemDescription;
-            copiedItem.itemBuyingPrice = itemSO.itemBuyingPrice;
-            copiedItem.itemSellingPrice = itemSO.itemSellingPrice;
-            copiedItem.itemWeight = itemSO.itemWeight;
-            copiedItem.itemRarity = itemSO.itemRarity;
-            copiedItem.itemQuantity = itemSO.itemQuantity; 
-            copiedItem.itemPrefab = itemSO.itemPrefab; 
-
-            displayedItemInShop.Add(copiedItem);
+            displayedItemInShop.Add(CreateShopItemCopy(itemSO));
         }
+    }
+
+    private ItemSO CreateShopItemCopy(ItemSO originalItem)
+    {
+        ItemSO copiedItem = ScriptableObject.CreateInstance<ItemSO>();
+        copiedItem.itemID = originalItem.itemID;
+        copiedItem.itemType = originalItem.itemType;
+        copiedItem.itemSprite = originalItem.itemSprite;
+        copiedItem.itemRarityBG = originalItem.itemRarityBG;
+        copiedItem.itemDescription = originalItem.itemDescription;
+        copiedItem.itemBuyingPrice = originalItem.itemBuyingPrice;
+        copiedItem.itemSellingPrice = originalItem.itemSellingPrice;
+        copiedItem.itemWeight = originalItem.itemWeight;
+        copiedItem.itemRarity = originalItem.itemRarity;
+        copiedItem.itemQuantity = originalItem.itemQuantity;
+        copiedItem.itemPrefab = originalItem.itemPrefab;
+        return copiedItem;
     }
 
     public void SetShopController(ShopController controller)
@@ -51,20 +55,7 @@ public class ShopModel
     {
         if (!displayedItemInShop.Exists(i => i.itemID == itemToAdd.itemID))
         {
-            ItemSO copiedItem = ScriptableObject.CreateInstance<ItemSO>();
-            copiedItem.itemID = itemToAdd.itemID;
-            copiedItem.itemType = itemToAdd.itemType;
-            copiedItem.itemSprite = itemToAdd.itemSprite;
-            copiedItem.itemRarityBG = itemToAdd.itemRarityBG;
-            copiedItem.itemDescription = itemToAdd.itemDescription;
-            copiedItem.itemBuyingPrice = itemToAdd.itemBuyingPrice;
-            copiedItem.itemSellingPrice = itemToAdd.itemSellingPrice;
-            copiedItem.itemWeight = itemToAdd.itemWeight;
-            copiedItem.itemRarity = itemToAdd.itemRarity;
-            copiedItem.itemQuantity = itemToAdd.itemQuantity; 
-            copiedItem.itemPrefab = itemToAdd.itemPrefab; 
-
-            displayedItemInShop.Add(copiedItem);
+            displayedItemInShop.Add(CreateShopItemCopy(itemToAdd));
         }
     }
 

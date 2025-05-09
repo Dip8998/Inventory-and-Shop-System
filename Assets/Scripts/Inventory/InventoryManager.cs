@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -7,23 +8,24 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private UIService uiService;
     [SerializeField] private ItemView itemView;
     [SerializeField] private CurrencyManager currencyManager;
+    [SerializeField] private ShopManager shopManager;
 
-    private InventoryModel inventoryModel;
-    private InventoryController inventoryController;
+    [HideInInspector] public InventoryModel inventoryModel;
+    [HideInInspector] public InventoryController inventoryController;
 
-    void Start()
+    void Awake()
     {
         inventoryModel = new InventoryModel();
-        inventoryController = new InventoryController(inventoryModel, inventoryView, allGatherableItems, currencyManager);
+        inventoryController = new InventoryController(inventoryModel, inventoryView, allGatherableItems, currencyManager, uiService, shopManager?.shopModelInstance);
         inventoryView.InjectDependencies(itemView, uiService);
 
-        uiService.SetInventoryController(inventoryController);
+        uiService.SetInventoryManager(this);
 
         inventoryView.UpdateInventoryUI(inventoryModel.GetItems());
     }
 
     public void OnGatherResourcesButtonClicked()
     {
-        inventoryController.GatherResources();
+        EventService.Instance.OnGatherResourceButtonClickedEvent.InvokeEvent();
     }
 }

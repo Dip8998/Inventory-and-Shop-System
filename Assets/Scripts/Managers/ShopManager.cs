@@ -8,16 +8,20 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private UIService uiService;
     [SerializeField] private ItemView itemViewPrefab;
     [SerializeField] private CurrencyManager currencyManager;
+    [SerializeField] private InventoryManager inventoryManager; 
 
     [HideInInspector] public ShopController shopControllerInstance;
+    [HideInInspector]public ShopModel shopModelInstance;
 
     private void Start()
     {
-        InventoryModel inventoryModel = new InventoryModel();
-        InventoryController inventoryController = new InventoryController(inventoryModel, inventoryView, itemList,currencyManager);
+        InventoryModel inventoryModel = inventoryManager.inventoryModel; 
+        InventoryController inventoryController = inventoryManager.inventoryController; 
 
-        ShopModel shopModel = new ShopModel(itemList);
+        shopModelInstance = new ShopModel(itemList);
         shopView.InjectDependencies(itemViewPrefab, uiService, itemList);
-        shopControllerInstance = new ShopController(shopModel, shopView, inventoryController, currencyManager);
+        shopControllerInstance = new ShopController(shopModelInstance, shopView, inventoryController, currencyManager, uiService); 
+
+        uiService.SetShopManager(this); 
     }
 }

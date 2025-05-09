@@ -1207,6 +1207,7 @@ MonoBehaviour:
   uiService: {fileID: 1158104473}
   itemViewPrefab: {fileID: 8447594110628039026, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   currencyManager: {fileID: 1617295878}
+  inventoryManager: {fileID: 1022792677}
 --- !u!1 &484288286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,6 +2372,7 @@ MonoBehaviour:
   uiService: {fileID: 1158104473}
   itemView: {fileID: 8447594110628039026, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   currencyManager: {fileID: 1617295878}
+  shopManager: {fileID: 437085093}
 --- !u!4 &1022792678
 Transform:
   m_ObjectHideFlags: 0
@@ -3181,6 +3183,8 @@ MonoBehaviour:
   itemDetailsPanel: {fileID: 2504979085124598719}
   shopView: {fileID: 386460207}
   shopManager: {fileID: 437085093}
+  inventoryView: {fileID: 0}
+  inventoryManager: {fileID: 0}
   itemImage: {fileID: 9111520354927150741}
   itemRarityBG: {fileID: 3073174066523849151}
   itemName: {fileID: 6230539781407781656}

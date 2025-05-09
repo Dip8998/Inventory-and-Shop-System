@@ -8,22 +8,36 @@ public class InventoryController
     private InventoryView inventoryView;
     private ItemListSO allItemsList;
     private CurrencyManager currencyManager;
+    private UIService uiService;
+    private ShopModel shopModel;
 
-
-    public InventoryController(InventoryModel model, InventoryView view, ItemListSO allItems, CurrencyManager currency)
+    public InventoryController(InventoryModel model, InventoryView view, ItemListSO allItems, CurrencyManager currency, UIService uiService, ShopModel shopModel = null)
     {
         inventoryModel = model;
         inventoryView = view;
         allItemsList = allItems;
         currencyManager = currency;
+        this.uiService = uiService;
+        this.shopModel = shopModel;
 
         inventoryModel.SetInventoryController(this);
         inventoryView.SetController(this);
+
+        EventService.Instance.OnGatherResourceButtonClickedEvent.AddListener(GatherResources);
+        EventService.Instance.OnItemButtonClickedEvent.AddListener(ShowItemDetails);
+        EventService.Instance.OnConfirmSellButtonClickedEvent.AddListener(ConfirmSellItem);
+    }
+
+    ~InventoryController()
+    {
+        EventService.Instance.OnGatherResourceButtonClickedEvent.RemoveListener(GatherResources);
+        EventService.Instance.OnItemButtonClickedEvent.RemoveListener(ShowItemDetails);
+        EventService.Instance.OnConfirmSellButtonClickedEvent.RemoveListener(ConfirmSellItem);
     }
 
     public void GatherResources()
     {
-            AddItem();
+        AddItemForGathering();
     }
 
     public void UpdateInventoryView()
@@ -31,18 +45,11 @@ public class InventoryController
         inventoryView.UpdateInventoryUI(inventoryModel.GetItems());
     }
 
-    public void AddItem()
+    private void AddItemForGathering()
     {
         if (inventoryModel.GetTotalWeight() >= inventoryModel.GetMaxWeight())
         {
-            if (inventoryView.GetUIService() != null)
-            {
-                inventoryView.GetUIService().ShowOverweightPopup();
-            }
-            else
-            {
-                Debug.LogError("UIService reference not set in InventoryController!");
-            }
+            EventService.Instance.OnOverweightPopupEvent.InvokeEvent(); 
             return;
         }
 
@@ -54,7 +61,7 @@ public class InventoryController
         {
             int randomIndex = Random.Range(0, allItemsList.items.Count);
             ItemSO randomItemSO = allItemsList.items[randomIndex];
-            int gatherQuantity = Random.Range(1, 4);
+            int gatherQuantity = Random.Range(1, 5);
 
             int itemWeight = randomItemSO.itemWeight * gatherQuantity;
 
@@ -68,7 +75,7 @@ public class InventoryController
                 }
                 else
                 {
-                    ItemModel gatheredItem = new ItemModel(randomItemSO, false); 
+                    ItemModel gatheredItem = new ItemModel(randomItemSO, false);
                     gatheredItem.quantity = gatherQuantity;
                     gatheredItem.AdjustRarity(rarityFactor);
                     inventoryModel.GetItems().Add(gatheredItem);
@@ -79,11 +86,12 @@ public class InventoryController
             }
             else
             {
-                inventoryView.GetUIService().ShowOverweightPopup(); 
+                EventService.Instance.OnOverweightPopupEvent.InvokeEvent(); 
                 break;
             }
         }
     }
+
     public int GetMaxInventoryWeight()
     {
         return inventoryModel.GetMaxWeight();
@@ -97,11 +105,6 @@ public class InventoryController
     public void IncreaseTotalWeight(int _totalWeight)
     {
         inventoryModel.IncreaseTotalWeight(_totalWeight);
-    }
-
-    public bool CanAfford(int cost)
-    {
-        return currencyManager.GetCurrentCurrency() >= cost;
     }
 
     public void RemoveCurrency(int amount)
@@ -152,5 +155,45 @@ public class InventoryController
     public List<ItemModel> GetItems()
     {
         return inventoryModel.GetItems();
+    }
+
+    private void ShowItemDetails(ItemModel itemModel)
+    {
+        uiService.ShowItemDetails(itemModel);
+    }
+
+    private void ConfirmSellItem(ItemModel itemToSell)
+    {
+        if (itemToSell == null) return;
+
+        int totalPrice = itemToSell.sellingPrice * uiService.selectedQuantity; 
+        int totalWeightToRemove = itemToSell.weight * uiService.selectedQuantity;
+
+        currencyManager.AddCurrency(totalPrice);
+        RemoveItem(itemToSell, uiService.selectedQuantity, totalWeightToRemove);
+
+        EventService.Instance.OnFeedbackTextRequestedEvent.InvokeEvent($"You gained {totalPrice} gold!"); 
+
+        if (shopModel != null)
+        {
+            ItemSO shopItemSO = allItemsList.items.Find(so => so.itemID == itemToSell.itemID);
+            if (shopItemSO != null)
+            {
+                ItemSO copiedItem = ScriptableObject.CreateInstance<ItemSO>();
+                copiedItem.itemID = shopItemSO.itemID;
+                copiedItem.itemType = shopItemSO.itemType;
+                copiedItem.itemSprite = shopItemSO.itemSprite;
+                copiedItem.itemRarityBG = shopItemSO.itemRarityBG;
+                copiedItem.itemDescription = shopItemSO.itemDescription;
+                copiedItem.itemBuyingPrice = shopItemSO.itemBuyingPrice;
+                copiedItem.itemSellingPrice = shopItemSO.itemSellingPrice;
+                copiedItem.itemWeight = shopItemSO.itemWeight;
+                copiedItem.itemRarity = shopItemSO.itemRarity;
+                copiedItem.itemQuantity = uiService.selectedQuantity;
+                copiedItem.itemPrefab = shopItemSO.itemPrefab;
+
+                shopModel.AddShopItem(copiedItem);
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +8,10 @@ public class UIService : MonoBehaviour
     [SerializeField] private GameObject itemDetailsPanel;
     [SerializeField] private ShopView shopView;
     [SerializeField] private ShopManager shopManager;
-    private ItemModel selectedItemModel;
-    private InventoryController inventoryController;
-    private ItemSO items;
-    private int selectedQuantity = 1;
+    [SerializeField] private InventoryView inventoryView;
+    [SerializeField] private InventoryManager inventoryManager;
+    [HideInInspector] public ItemModel selectedItemModel;
+    [HideInInspector] public int selectedQuantity = 1;
     private bool isSelling = false;
 
     [Header("UI Elements")]
@@ -27,7 +26,7 @@ public class UIService : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemQuantity;
     [SerializeField] private TextMeshProUGUI weightText;
     [SerializeField] private TextMeshProUGUI quantityText;
-    [SerializeField] private Button confirmButton; 
+    [SerializeField] private Button confirmButton;
     [SerializeField] private TextMeshProUGUI confirmButtonText;
     [SerializeField] private TextMeshProUGUI feedbackText;
     [SerializeField] private AudioSource audioSource;
@@ -42,7 +41,25 @@ public class UIService : MonoBehaviour
     public GameObject overweightPopupPanel;
     public GameObject popUpForNotEnoughMoney;
 
-    public void ShowOverweightPopup()
+    void Awake()
+    {
+        EventService.Instance.OnOverweightPopupEvent.AddListener(ShowOverweightPopupInternal);
+        EventService.Instance.OnNotEnoughCurrencyPopupEvent.AddListener(ShowNotEnoughMoneyPopupInternal);
+        EventService.Instance.OnFeedbackTextRequestedEvent.AddListener(ShowFeedbackTextInternal);
+        EventService.Instance.OnPlusButtonClickedEvent.AddListener(OnIncreaseQuantity);
+        EventService.Instance.OnMinusButtonClickedEvent.AddListener(OnDecreaseQuantity);
+    }
+
+    ~UIService()
+    {
+        EventService.Instance.OnOverweightPopupEvent.RemoveListener(ShowOverweightPopupInternal);
+        EventService.Instance.OnNotEnoughCurrencyPopupEvent.RemoveListener(ShowNotEnoughMoneyPopupInternal);
+        EventService.Instance.OnFeedbackTextRequestedEvent.RemoveListener(ShowFeedbackTextInternal);
+        EventService.Instance.OnPlusButtonClickedEvent.RemoveListener(OnIncreaseQuantity);
+        EventService.Instance.OnMinusButtonClickedEvent.RemoveListener(OnDecreaseQuantity);
+    }
+
+    private void ShowOverweightPopupInternal()
     {
         if (overweightPopupPanel != null)
         {
@@ -59,6 +76,26 @@ public class UIService : MonoBehaviour
         if (overweightPopupPanel != null)
         {
             overweightPopupPanel.SetActive(false);
+        }
+    }
+
+    private void ShowNotEnoughMoneyPopupInternal()
+    {
+        if (popUpForNotEnoughMoney != null)
+        {
+            popUpForNotEnoughMoney.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Not Enough Money Popup not assigned in UIService!");
+        }
+    }
+
+    public void CloseNotEnoughMoneyPopup()
+    {
+        if (popUpForNotEnoughMoney != null)
+        {
+            popUpForNotEnoughMoney.SetActive(false);
         }
     }
 
@@ -81,65 +118,26 @@ public class UIService : MonoBehaviour
     {
         if (selectedItemModel == null) return;
 
-        int totalPrice = isSelling ? selectedItemModel.sellingPrice * selectedQuantity
-                                   : selectedItemModel.buyingPrice * selectedQuantity;
-        int totalWeight = selectedItemModel.weight * selectedQuantity;
-
         if (isSelling)
         {
-            inventoryController.AddCurrency(totalPrice);
-            inventoryController.RemoveItem(selectedItemModel, selectedQuantity, totalWeight);
-            audioSource.PlayOneShot(sellSound);
-            StartCoroutine(ShowFeedbackText($"You gained {totalPrice} gold!"));
+            EventService.Instance.OnConfirmSellButtonClickedEvent?.InvokeEvent(selectedItemModel);
         }
-        else // Buying
+        else
         {
-            if (!inventoryController.CanAfford(totalPrice))
-            {
-                popUpForNotEnoughMoney.SetActive(true);
-                confirmationPopupPanel.SetActive(false);
-                return;
-            }
-
-            if (!inventoryController.CanAddWeight(totalWeight))
-            {
-                overweightPopupPanel.SetActive(true);
-                confirmationPopupPanel.SetActive(false);
-                return;
-            }
-
-            inventoryController.RemoveCurrency(totalPrice);
-            inventoryController.AddItem(selectedItemModel, selectedQuantity);
-
-            if (shopManager != null)
-            {
-                ShopController shopController = shopManager.shopControllerInstance; 
-                if (shopController != null)
-                {
-                    ShopModel shopModel = shopController.GetShopModel();
-                    if (shopModel != null)
-                    {
-                        shopModel.DecreaseShopItemQuantity(selectedItemModel.itemID, selectedQuantity);
-                    }
-                    shopController.ShowAllItems(shopView.GetCurrentFilter()); 
-                }
-                else
-                {
-                    Debug.LogError("ShopController instance is null in ShopManager!");
-                }
-            }
-            else
-            {
-                Debug.LogError("ShopManager reference not set in UIService!");
-            }
-
-            audioSource.PlayOneShot(buySound);
-            StartCoroutine(ShowFeedbackText($"You bought {selectedItemModel.itemType} x{selectedQuantity}!"));
+            EventService.Instance.OnConfirmBuyButtonClickedEvent?.InvokeEvent(selectedItemModel.GetItem());
         }
 
         confirmationPopupPanel.SetActive(false);
         itemDetailsPanel.SetActive(false);
-        inventoryController.UpdateInventoryView();
+        UpdateWeightText();
+        if (inventoryView != null)
+        {
+            inventoryView.UpdateInventoryUI(inventoryManager.inventoryController.GetItems());
+        }
+        if (shopView != null && shopManager != null && shopManager.shopControllerInstance != null)
+        {
+            shopManager.shopControllerInstance.ShowAllItems(shopView.GetCurrentFilter());
+        }
     }
 
     public void OnConfirmNoClicked()
@@ -163,31 +161,48 @@ public class UIService : MonoBehaviour
         itemWeight.text = $"Weight - {itemModel.weight}";
         itemQuantity.text = $"Quantity - {itemModel.quantity}";
 
-        isSelling = !selectedItemModel.isFromShop; 
+        isSelling = !selectedItemModel.isFromShop;
 
         confirmButtonText.text = isSelling ? "Sell" : "Buy";
         confirmButton.onClick.RemoveAllListeners();
-        confirmButton.onClick.AddListener(OnConfirmTransaction);
+        confirmButton.onClick.AddListener(OnConfirmTransaction); // This button click triggers the confirmation popup
 
         itemDetailsPanel.SetActive(true);
     }
 
     public void UpdateWeightText()
     {
-        float currentWeight = inventoryController.GetTotalWeight();
-        float maxWeight = inventoryController.GetMaxInventoryWeight();
-        weightText.text = $"Weight: {currentWeight}/{maxWeight} kg";
+        if (inventoryManager != null && inventoryManager.inventoryController != null)
+        {
+            float currentWeight = inventoryManager.inventoryController.GetTotalWeight();
+            float maxWeight = inventoryManager.inventoryController.GetMaxInventoryWeight();
+            weightText.text = $"Weight: {currentWeight}/{maxWeight} kg";
+        }
+        else
+        {
+            Debug.LogWarning("Inventory Manager or Controller not set in UIService for weight update!");
+        }
     }
 
     public void OnIncreaseQuantity()
     {
         if (selectedItemModel == null) return;
-        if (!isSelling && selectedQuantity < selectedItemModel.quantity) 
+        if (!isSelling && selectedQuantity < GetShopItemQuantity(selectedItemModel.itemID))
             selectedQuantity++;
         else if (isSelling && selectedQuantity < selectedItemModel.quantity)
             selectedQuantity++;
 
         UpdateQuantityText();
+    }
+
+    private int GetShopItemQuantity(string itemID)
+    {
+        if (shopManager != null && shopManager.shopControllerInstance != null)
+        {
+            ItemSO shopItem = shopManager.shopControllerInstance.GetShopModel().GetShopItemByID(itemID);
+            return shopItem != null ? shopItem.itemQuantity : 0;
+        }
+        return 0;
     }
 
     public void OnDecreaseQuantity()
@@ -203,7 +218,12 @@ public class UIService : MonoBehaviour
         ShowConfirmationPopup();
     }
 
-    private IEnumerator ShowFeedbackText(string message)
+    private void ShowFeedbackTextInternal(string message)
+    {
+        StartCoroutine(ShowFeedbackTextCoroutine(message));
+    }
+
+    private IEnumerator ShowFeedbackTextCoroutine(string message)
     {
         feedbackText.text = message;
         feedbackText.gameObject.SetActive(true);
@@ -211,14 +231,30 @@ public class UIService : MonoBehaviour
         feedbackText.gameObject.SetActive(false);
     }
 
+    private void PlayTransactionSoundInternal(bool isBuying)
+    {
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(isBuying ? buySound : sellSound);
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource not assigned in UIService!");
+        }
+    }
+
     private void UpdateQuantityText()
     {
         quantityText.text = selectedQuantity.ToString();
     }
 
-
-    public void SetInventoryController(InventoryController controller)
+    public void SetInventoryManager(InventoryManager manager)
     {
-        inventoryController = controller;
+        inventoryManager = manager;
+    }
+
+    public void SetShopManager(ShopManager manager)
+    {
+        shopManager = manager;
     }
 }

@@ -10,8 +10,7 @@ public class ShopView : MonoBehaviour
     [SerializeField] private Transform itemContainer;
     [SerializeField] private ItemView itemViewPrefab;
     [SerializeField] private UIService uiService;
-    
-    private ItemSO selectedItemToBuy;
+
     private ItemType? currentFilter;
 
     public void SetController(ShopController controller)
@@ -29,31 +28,31 @@ public class ShopView : MonoBehaviour
     public void OnShowAllItemsButtonClicked()
     {
         currentFilter = null;
-        shopController.ShowAllItems();
+        EventService.Instance.OnItemTypeButtonClickedEvent.InvokeEvent(null);
     }
 
     public void OnShowWeaponItemsButtonClicked()
     {
         currentFilter = ItemType.Weapons;
-        shopController.ShowAllItems(ItemType.Weapons);
+        EventService.Instance.OnItemTypeButtonClickedEvent.InvokeEvent(ItemType.Weapons);
     }
 
     public void OnShowConsumableItemsButtonClicked()
     {
         currentFilter = ItemType.Consumables;
-        shopController.ShowAllItems(ItemType.Consumables);
+        EventService.Instance.OnItemTypeButtonClickedEvent.InvokeEvent(ItemType.Consumables);
     }
 
     public void OnShowMaterialItemsButtonClicked()
     {
         currentFilter = ItemType.Materials;
-        shopController.ShowAllItems(ItemType.Materials);
+        EventService.Instance.OnItemTypeButtonClickedEvent.InvokeEvent(ItemType.Materials);
     }
 
     public void OnShowTreasureItemsButtonClicked()
     {
         currentFilter = ItemType.Treasures;
-        shopController.ShowAllItems(ItemType.Treasures);
+        EventService.Instance.OnItemTypeButtonClickedEvent.InvokeEvent(ItemType.Treasures);
     }
 
     public ItemListSO GetInventorySO() => itemList;

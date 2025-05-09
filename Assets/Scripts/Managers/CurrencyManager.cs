@@ -12,9 +12,9 @@ public class CurrencyManager : MonoBehaviour
         UpdateCurrencyUI();
     }
 
-    private void Start()
+    private void Awake()
     {
-        UpdateCurrencyUI();
+        UpdateCurrencyUI(); 
     }
 
     public void AddCurrency(int amount)
@@ -36,6 +36,11 @@ public class CurrencyManager : MonoBehaviour
     public int GetCurrentCurrency()
     {
         return currentCurrency;
+    }
+
+    public bool CanAfford(int amount)
+    {
+        return currentCurrency >= amount;
     }
 
     private void UpdateCurrencyUI()

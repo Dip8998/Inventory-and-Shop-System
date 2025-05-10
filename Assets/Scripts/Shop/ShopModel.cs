@@ -21,6 +21,7 @@ public class ShopModel
     {
         ItemSO copiedItem = ScriptableObject.CreateInstance<ItemSO>();
         copiedItem.itemID = originalItem.itemID;
+        copiedItem.itemName = originalItem.itemName;
         copiedItem.itemType = originalItem.itemType;
         copiedItem.itemSprite = originalItem.itemSprite;
         copiedItem.itemRarityBG = originalItem.itemRarityBG;

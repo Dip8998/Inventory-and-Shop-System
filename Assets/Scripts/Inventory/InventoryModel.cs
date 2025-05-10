@@ -5,7 +5,8 @@ public class InventoryModel
 {
     private InventoryController inventoryController;
     private List<ItemModel> items = new List<ItemModel>();
-    private int maxWeight = 200;
+    private const int MaxWeightDefault = 200;
+    private int maxWeight = MaxWeightDefault;
     private int totalWeight;
 
     public List<ItemModel> GetItems() => items;
@@ -29,7 +30,7 @@ public class InventoryModel
     {
         totalWeight += additionalWeight;
     }
-    
+
     public float GetCumulativeValue()
     {
         float cumulativeValue = 0;
@@ -38,5 +39,15 @@ public class InventoryModel
             cumulativeValue += item.buyingPrice;
         }
         return cumulativeValue;
+    }
+
+    public void AddItemInternal(ItemModel item)
+    {
+        items.Add(item);
+    }
+
+    public void RemoveItemInternal(ItemModel item)
+    {
+        items.Remove(item);
     }
 }

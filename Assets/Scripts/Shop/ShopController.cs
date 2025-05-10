@@ -96,7 +96,7 @@ public class ShopController
         inventoryController.AddItem(new ItemModel(itemToBuySO, false), quantity);
         shopModel.DecreaseShopItemQuantity(itemToBuySO.itemID, quantity);
 
-        EventService.Instance.OnFeedbackTextRequestedEvent.InvokeEvent($"You bought {itemToBuySO.itemType} x{quantity}!");
+        EventService.Instance.OnFeedbackTextRequestedEvent.InvokeEvent($"You bought {itemToBuySO.itemName} x{quantity}!");
         SoundService.Instance.Play(Sounds.BUYSOUND);
         ShowAllItems(shopView.GetCurrentFilter()); 
     }

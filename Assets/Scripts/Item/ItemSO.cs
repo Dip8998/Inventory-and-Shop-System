@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemSO : ScriptableObject
 {
     public string itemID;
+    public string itemName;
     public ItemType itemType;
     public GameObject itemPrefab;
     public Sprite itemSprite;

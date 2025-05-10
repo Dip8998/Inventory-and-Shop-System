@@ -40,16 +40,11 @@ public class InventoryController
         AddItemForGathering();
     }
 
-    public void UpdateInventoryView()
-    {
-        inventoryView.UpdateInventoryUI(inventoryModel.GetItems());
-    }
-
     private void AddItemForGathering()
     {
         if (inventoryModel.GetTotalWeight() >= inventoryModel.GetMaxWeight())
         {
-            EventService.Instance.OnOverweightPopupEvent.InvokeEvent(); 
+            EventService.Instance.OnOverweightPopupEvent.InvokeEvent();
             return;
         }
 
@@ -78,15 +73,15 @@ public class InventoryController
                     ItemModel gatheredItem = new ItemModel(randomItemSO, false);
                     gatheredItem.quantity = gatherQuantity;
                     gatheredItem.AdjustRarity(rarityFactor);
-                    inventoryModel.GetItems().Add(gatheredItem);
+                    inventoryModel.AddItemInternal(gatheredItem); 
                 }
 
                 IncreaseTotalWeight(itemWeight);
-                UpdateInventoryView();
+                EventService.Instance.OnInventoryChangedEvent.InvokeEvent(); 
             }
             else
             {
-                EventService.Instance.OnOverweightPopupEvent.InvokeEvent(); 
+                EventService.Instance.OnOverweightPopupEvent.InvokeEvent();
                 break;
             }
         }
@@ -133,23 +128,29 @@ public class InventoryController
         {
             ItemModel newItem = new ItemModel(baseItem.GetItem(), false);
             newItem.quantity = quantity;
-            inventoryModel.GetItems().Add(newItem);
+            inventoryModel.AddItemInternal(newItem); 
         }
 
         IncreaseTotalWeight(baseItem.weight * quantity);
-        UpdateInventoryView();
+        EventService.Instance.OnInventoryChangedEvent.InvokeEvent(); 
     }
 
     public void RemoveItem(ItemModel item, int quantity, int weightToRemove)
     {
-        item.quantity -= quantity;
-        if (item.quantity <= 0)
+        ItemModel existing = inventoryModel.GetItems().Find(i => i == item); 
+        if (existing != null)
         {
-            inventoryModel.GetItems().Remove(item);
+            existing.quantity -= quantity;
+            if (existing.quantity <= 0)
+            {
+                inventoryModel.RemoveItemInternal(existing); 
+            }
+            else
+            {
+                EventService.Instance.OnInventoryChangedEvent.InvokeEvent(); 
+            }
+            IncreaseTotalWeight(-weightToRemove);
         }
-
-        IncreaseTotalWeight(-weightToRemove);
-        UpdateInventoryView();
     }
 
     public List<ItemModel> GetItems()
@@ -167,11 +168,12 @@ public class InventoryController
     {
         if (itemToSell == null) return;
 
-        int totalPrice = itemToSell.sellingPrice * uiService.selectedQuantity; 
+        int totalPrice = itemToSell.sellingPrice * uiService.selectedQuantity;
         int totalWeightToRemove = itemToSell.weight * uiService.selectedQuantity;
 
         currencyManager.AddCurrency(totalPrice);
         RemoveItem(itemToSell, uiService.selectedQuantity, totalWeightToRemove);
+        EventService.Instance.OnInventoryChangedEvent.InvokeEvent(); 
 
         EventService.Instance.OnFeedbackTextRequestedEvent.InvokeEvent($"You gained {totalPrice} gold!");
 

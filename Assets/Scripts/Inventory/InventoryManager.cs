@@ -26,6 +26,7 @@ public class InventoryManager : MonoBehaviour
 
     public void OnGatherResourcesButtonClicked()
     {
+        SoundService.Instance.Play(Sounds.GATHERRESOURCE);
         EventService.Instance.OnGatherResourceButtonClickedEvent.InvokeEvent();
     }
 }

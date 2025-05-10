@@ -30,6 +30,8 @@ public class EventService
     public EventController OnMinusButtonClickedEvent { get; private set; }
     public EventController<string> OnFeedbackTextRequestedEvent { get; private set; }
     public EventController OnNotEnoughCurrencyPopupEvent { get; private set; }
+    public EventController OnButtonClickedEvent { get; private set; } 
+
 
     public EventService()
     {
@@ -49,5 +51,6 @@ public class EventService
         OnMinusButtonClickedEvent = new EventController();
         OnFeedbackTextRequestedEvent = new EventController<string>();
         OnNotEnoughCurrencyPopupEvent = new EventController();
+        OnButtonClickedEvent = new EventController(); 
     }
 }

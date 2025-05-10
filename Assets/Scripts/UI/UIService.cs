@@ -29,9 +29,7 @@ public class UIService : MonoBehaviour
     [SerializeField] private Button confirmButton;
     [SerializeField] private TextMeshProUGUI confirmButtonText;
     [SerializeField] private TextMeshProUGUI feedbackText;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip buySound;
-    [SerializeField] private AudioClip sellSound;
+
 
     [Header("Confirmation Popup")]
     public GameObject confirmationPopupPanel;
@@ -48,6 +46,7 @@ public class UIService : MonoBehaviour
         EventService.Instance.OnFeedbackTextRequestedEvent.AddListener(ShowFeedbackTextInternal);
         EventService.Instance.OnPlusButtonClickedEvent.AddListener(OnIncreaseQuantity);
         EventService.Instance.OnMinusButtonClickedEvent.AddListener(OnDecreaseQuantity);
+        EventService.Instance.OnButtonClickedEvent.AddListener(PlayButtonClickSoundInternal);
     }
 
     ~UIService()
@@ -57,6 +56,7 @@ public class UIService : MonoBehaviour
         EventService.Instance.OnFeedbackTextRequestedEvent.RemoveListener(ShowFeedbackTextInternal);
         EventService.Instance.OnPlusButtonClickedEvent.RemoveListener(OnIncreaseQuantity);
         EventService.Instance.OnMinusButtonClickedEvent.RemoveListener(OnDecreaseQuantity);
+        EventService.Instance.OnButtonClickedEvent.RemoveListener(PlayButtonClickSoundInternal);
     }
 
     private void ShowOverweightPopupInternal()
@@ -64,6 +64,7 @@ public class UIService : MonoBehaviour
         if (overweightPopupPanel != null)
         {
             overweightPopupPanel.SetActive(true);
+            PlayErrorSound();
         }
         else
         {
@@ -84,6 +85,7 @@ public class UIService : MonoBehaviour
         if (popUpForNotEnoughMoney != null)
         {
             popUpForNotEnoughMoney.SetActive(true);
+            PlayErrorSound();
         }
         else
         {
@@ -165,7 +167,7 @@ public class UIService : MonoBehaviour
 
         confirmButtonText.text = isSelling ? "Sell" : "Buy";
         confirmButton.onClick.RemoveAllListeners();
-        confirmButton.onClick.AddListener(OnConfirmTransaction); // This button click triggers the confirmation popup
+        confirmButton.onClick.AddListener(OnConfirmTransaction); 
 
         itemDetailsPanel.SetActive(true);
     }
@@ -231,15 +233,27 @@ public class UIService : MonoBehaviour
         feedbackText.gameObject.SetActive(false);
     }
 
-    private void PlayTransactionSoundInternal(bool isBuying)
+    private void PlayErrorSound()
     {
-        if (audioSource != null)
+        if (SoundService.Instance != null)
         {
-            audioSource.PlayOneShot(isBuying ? buySound : sellSound);
+            SoundService.Instance.Play(Sounds.ERROR);
         }
         else
         {
-            Debug.LogWarning("AudioSource not assigned in UIService!");
+            Debug.LogWarning("SoundService Instance not found!");
+        }
+    }
+
+    private void PlayButtonClickSoundInternal()
+    {
+        if (SoundService.Instance != null)
+        {
+            SoundService.Instance.Play(Sounds.BUTTONCLICK);
+        }
+        else
+        {
+            Debug.LogWarning("SoundService Instance not found!");
         }
     }
 

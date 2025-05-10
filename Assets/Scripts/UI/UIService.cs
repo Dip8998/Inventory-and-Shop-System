@@ -17,19 +17,19 @@ public class UIService : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private Image itemImage;
     [SerializeField] private Image itemRarityBG;
-    [SerializeField] private TextMeshProUGUI itemName;
-    [SerializeField] private TextMeshProUGUI itemDescription;
-    [SerializeField] private TextMeshProUGUI itemBuyingPrice;
-    [SerializeField] private TextMeshProUGUI itemSellingPrice;
-    [SerializeField] private TextMeshProUGUI itemRarity;
-    [SerializeField] private TextMeshProUGUI itemWeight;
-    [SerializeField] private TextMeshProUGUI itemQuantity;
+    [SerializeField] private TextMeshProUGUI itemNameText;
+    [SerializeField] private TextMeshProUGUI itemTypeText;
+    [SerializeField] private TextMeshProUGUI itemDescriptionText;
+    [SerializeField] private TextMeshProUGUI itemBuyingPriceText;
+    [SerializeField] private TextMeshProUGUI itemSellingPriceText;
+    [SerializeField] private TextMeshProUGUI itemRarityText;
+    [SerializeField] private TextMeshProUGUI itemWeightText;
+    [SerializeField] private TextMeshProUGUI itemQuantityText;
     [SerializeField] private TextMeshProUGUI weightText;
     [SerializeField] private TextMeshProUGUI quantityText;
     [SerializeField] private Button confirmButton;
     [SerializeField] private TextMeshProUGUI confirmButtonText;
     [SerializeField] private TextMeshProUGUI feedbackText;
-
 
     [Header("Confirmation Popup")]
     public GameObject confirmationPopupPanel;
@@ -51,12 +51,15 @@ public class UIService : MonoBehaviour
 
     ~UIService()
     {
-        EventService.Instance.OnOverweightPopupEvent.RemoveListener(ShowOverweightPopupInternal);
-        EventService.Instance.OnNotEnoughCurrencyPopupEvent.RemoveListener(ShowNotEnoughMoneyPopupInternal);
-        EventService.Instance.OnFeedbackTextRequestedEvent.RemoveListener(ShowFeedbackTextInternal);
-        EventService.Instance.OnPlusButtonClickedEvent.RemoveListener(OnIncreaseQuantity);
-        EventService.Instance.OnMinusButtonClickedEvent.RemoveListener(OnDecreaseQuantity);
-        EventService.Instance.OnButtonClickedEvent.RemoveListener(PlayButtonClickSoundInternal);
+        if (EventService.Instance != null)
+        {
+            EventService.Instance.OnOverweightPopupEvent.RemoveListener(ShowOverweightPopupInternal);
+            EventService.Instance.OnNotEnoughCurrencyPopupEvent.RemoveListener(ShowNotEnoughMoneyPopupInternal);
+            EventService.Instance.OnFeedbackTextRequestedEvent.RemoveListener(ShowFeedbackTextInternal);
+            EventService.Instance.OnPlusButtonClickedEvent.RemoveListener(OnIncreaseQuantity);
+            EventService.Instance.OnMinusButtonClickedEvent.RemoveListener(OnDecreaseQuantity);
+            EventService.Instance.OnButtonClickedEvent.RemoveListener(PlayButtonClickSoundInternal);
+        }
     }
 
     private void ShowOverweightPopupInternal()
@@ -64,11 +67,11 @@ public class UIService : MonoBehaviour
         if (overweightPopupPanel != null)
         {
             overweightPopupPanel.SetActive(true);
-            PlayErrorSound();
+            PlaySound(Sounds.ERROR);
         }
         else
         {
-            Debug.LogWarning("Overweight Popup Panel not assigned in UIService!");
+            Debug.LogWarning(UIConstants.OverweightPopupNotAssigned);
         }
     }
 
@@ -85,11 +88,11 @@ public class UIService : MonoBehaviour
         if (popUpForNotEnoughMoney != null)
         {
             popUpForNotEnoughMoney.SetActive(true);
-            PlayErrorSound();
+            PlaySound(Sounds.ERROR);
         }
         else
         {
-            Debug.LogWarning("Not Enough Money Popup not assigned in UIService!");
+            Debug.LogWarning(UIConstants.NotEnoughMoneyPopupNotAssigned);
         }
     }
 
@@ -105,13 +108,13 @@ public class UIService : MonoBehaviour
     {
         if (selectedItemModel == null) return;
 
-        string itemName = selectedItemModel.itemType.ToString();
+        string itemName = selectedItemModel.itemName;
         int totalPrice = isSelling ? selectedItemModel.sellingPrice * selectedQuantity
                                    : selectedItemModel.buyingPrice * selectedQuantity;
 
-        confirmationItemNameText.text = $"Confirm {(isSelling ? "Sell" : "Buy")}";
+        confirmationItemNameText.text = string.Format(isSelling ? UIConstants.ConfirmSell : UIConstants.ConfirmBuy);
         confirmationQuantityText.text = $"{selectedQuantity} x {itemName}";
-        confirmationTotalText.text = $"Total: {totalPrice} Gold";
+        confirmationTotalText.text = string.Format(UIConstants.Total, totalPrice);
 
         confirmationPopupPanel.SetActive(true);
     }
@@ -132,7 +135,7 @@ public class UIService : MonoBehaviour
         confirmationPopupPanel.SetActive(false);
         itemDetailsPanel.SetActive(false);
         UpdateWeightText();
-        if (inventoryView != null)
+        if (inventoryView != null && inventoryManager != null && inventoryManager.inventoryController != null)
         {
             inventoryView.UpdateInventoryUI(inventoryManager.inventoryController.GetItems());
         }
@@ -155,19 +158,20 @@ public class UIService : MonoBehaviour
 
         itemImage.sprite = itemModel.itemSprite;
         itemRarityBG.sprite = itemModel.itemRarityBG;
-        itemName.text = $"Type - {itemModel.itemType}";
-        itemDescription.text = $"Item Description - {itemModel.itemDescription}";
-        itemBuyingPrice.text = $"Buying Price - {itemModel.buyingPrice}";
-        itemSellingPrice.text = $"Selling Price - {itemModel.sellingPrice}";
-        itemRarity.text = $"Rarity - {itemModel.rarity}";
-        itemWeight.text = $"Weight - {itemModel.weight}";
-        itemQuantity.text = $"Quantity - {itemModel.quantity}";
+        itemNameText.text = string.Format(UIConstants.NameFormat, itemModel.itemName);
+        itemTypeText.text = string.Format(UIConstants.TypeFormat, itemModel.itemType);
+        itemDescriptionText.text = string.Format(UIConstants.DescriptionFormat, itemModel.itemDescription);
+        itemBuyingPriceText.text = string.Format(UIConstants.BuyingPriceFormat, itemModel.buyingPrice);
+        itemSellingPriceText.text = string.Format(UIConstants.SellingPriceFormat, itemModel.sellingPrice);
+        itemRarityText.text = string.Format(UIConstants.RarityFormat, itemModel.rarity);
+        itemWeightText.text = string.Format(UIConstants.WeightFormat, itemModel.weight);
+        itemQuantityText.text = string.Format(UIConstants.QuantityFormat, itemModel.quantity);
 
         isSelling = !selectedItemModel.isFromShop;
 
-        confirmButtonText.text = isSelling ? "Sell" : "Buy";
+        confirmButtonText.text = isSelling ? UIConstants.SellButtonText : UIConstants.BuyButtonText;
         confirmButton.onClick.RemoveAllListeners();
-        confirmButton.onClick.AddListener(OnConfirmTransaction); 
+        confirmButton.onClick.AddListener(OnConfirmTransaction);
 
         itemDetailsPanel.SetActive(true);
     }
@@ -178,11 +182,11 @@ public class UIService : MonoBehaviour
         {
             float currentWeight = inventoryManager.inventoryController.GetTotalWeight();
             float maxWeight = inventoryManager.inventoryController.GetMaxInventoryWeight();
-            weightText.text = $"Weight: {currentWeight}/{maxWeight} kg";
+            weightText.text = string.Format(UIConstants.WeightTextFormat, currentWeight, maxWeight);
         }
         else
         {
-            Debug.LogWarning("Inventory Manager or Controller not set in UIService for weight update!");
+            Debug.LogWarning(UIConstants.InventoryManagerNotSetWeight);
         }
     }
 
@@ -229,32 +233,30 @@ public class UIService : MonoBehaviour
     {
         feedbackText.text = message;
         feedbackText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(UIConstants.FeedbackTextDisplayDuration);
         feedbackText.gameObject.SetActive(false);
+    }
+
+    private void PlaySound(Sounds sound)
+    {
+        if (SoundService.Instance != null)
+        {
+            SoundService.Instance.Play(sound);
+        }
+        else
+        {
+            Debug.LogWarning(UIConstants.SoundServiceNotFound);
+        }
     }
 
     private void PlayErrorSound()
     {
-        if (SoundService.Instance != null)
-        {
-            SoundService.Instance.Play(Sounds.ERROR);
-        }
-        else
-        {
-            Debug.LogWarning("SoundService Instance not found!");
-        }
+        PlaySound(Sounds.ERROR);
     }
 
     private void PlayButtonClickSoundInternal()
     {
-        if (SoundService.Instance != null)
-        {
-            SoundService.Instance.Play(Sounds.BUTTONCLICK);
-        }
-        else
-        {
-            Debug.LogWarning("SoundService Instance not found!");
-        }
+        PlaySound(Sounds.BUTTONCLICK);
     }
 
     private void UpdateQuantityText()

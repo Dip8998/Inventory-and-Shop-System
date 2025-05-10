@@ -1,3 +1,5 @@
+using System;
+
 public class EventService
 {
     private static EventService instance;
@@ -19,6 +21,7 @@ public class EventService
     public EventController<ItemModel> OnItemButtonClickedEvent { get; private set; }
     public EventController<ItemModel> OnConfirmSellButtonClickedEvent { get; private set; }
     public EventController OnOverweightPopupEvent { get; private set; }
+    public EventController OnInventoryChangedEvent { get; private set; } 
 
     // Shop Related Events
     public EventController<ItemType?> OnItemTypeButtonClickedEvent { get; private set; }
@@ -30,7 +33,7 @@ public class EventService
     public EventController OnMinusButtonClickedEvent { get; private set; }
     public EventController<string> OnFeedbackTextRequestedEvent { get; private set; }
     public EventController OnNotEnoughCurrencyPopupEvent { get; private set; }
-    public EventController OnButtonClickedEvent { get; private set; } 
+    public EventController OnButtonClickedEvent { get; private set; }
 
 
     public EventService()
@@ -40,6 +43,7 @@ public class EventService
         OnItemButtonClickedEvent = new EventController<ItemModel>();
         OnConfirmSellButtonClickedEvent = new EventController<ItemModel>();
         OnOverweightPopupEvent = new EventController();
+        OnInventoryChangedEvent = new EventController(); 
 
         // Initialize Shop Events
         OnItemTypeButtonClickedEvent = new EventController<ItemType?>();
@@ -51,6 +55,6 @@ public class EventService
         OnMinusButtonClickedEvent = new EventController();
         OnFeedbackTextRequestedEvent = new EventController<string>();
         OnNotEnoughCurrencyPopupEvent = new EventController();
-        OnButtonClickedEvent = new EventController(); 
+        OnButtonClickedEvent = new EventController();
     }
 }

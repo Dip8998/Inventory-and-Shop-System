@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: VeryCommonBookSO
   m_EditorClassIdentifier: 
   itemID: TREASURE_001
+  itemName: Shadowseer Grimoire
   itemType: 3
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: -8562085758611138375, guid: 3de143eebd3271640a61f8b5ff333cfe, type: 3}

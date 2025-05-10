@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InventoryView : MonoBehaviour
 {
     private InventoryController inventoryController;
-
+    [SerializeField] private InventoryManager inventoryManager; 
     [SerializeField] private Transform inventoryItemContainer;
     [SerializeField] private ItemView itemViewPrefab;
     [SerializeField] private UIService uiService;
@@ -22,11 +22,28 @@ public class InventoryView : MonoBehaviour
         uiService = ui;
     }
 
+    void Awake()
+    {
+        EventService.Instance.OnInventoryChangedEvent.AddListener(UpdateInventoryUIInternal);
+    }
+
+    void OnDestroy()
+    {
+        EventService.Instance.OnInventoryChangedEvent.RemoveListener(UpdateInventoryUIInternal);
+    }
+
     public void UpdateInventoryUI(List<ItemModel> items)
     {
         UpdateInventory(items);
-
         uiService.UpdateWeightText();
+    }
+
+    private void UpdateInventoryUIInternal()
+    {
+        if (inventoryManager != null && inventoryManager.inventoryModel != null)
+        {
+            UpdateInventoryUI(inventoryManager.inventoryModel.GetItems());
+        }
     }
 
     private void UpdateInventory(List<ItemModel> items)

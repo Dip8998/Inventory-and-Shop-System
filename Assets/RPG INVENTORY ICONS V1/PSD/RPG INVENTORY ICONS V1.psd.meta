@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RPG INVENTORY ICONS V1_0: 4105935757584806229
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

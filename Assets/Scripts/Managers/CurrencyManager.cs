@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CurrencyManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
-        UpdateCurrencyUI(); 
+        UpdateCurrencyUI();
     }
 
     public void AddCurrency(int amount)
@@ -47,11 +48,11 @@ public class CurrencyManager : MonoBehaviour
     {
         if (currencyText != null)
         {
-            currencyText.text = "Gold: " + currentCurrency.ToString();
+            currencyText.text = string.Format(UIConstants.CurrencyTextFormat, currentCurrency);
         }
         else
         {
-            Debug.LogWarning("CurrencyText not assigned!");
+            Debug.LogWarning(UIConstants.CurrencyTextNotAssigned);
         }
     }
 }

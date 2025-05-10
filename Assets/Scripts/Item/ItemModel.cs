@@ -4,21 +4,23 @@ using UnityEngine;
 public class ItemModel
 {
     public string itemID;
+    public string itemName;
     public ItemType itemType;
     public Sprite itemSprite;
-    public Sprite itemRarityBG; 
-    public string itemDescription; 
-    public int buyingPrice; 
-    public int sellingPrice; 
-    public int weight; 
+    public Sprite itemRarityBG;
+    public string itemDescription;
+    public int buyingPrice;
+    public int sellingPrice;
+    public int weight;
     public ItemRarity rarity;
     public int quantity;
     private ItemSO itemSO;
     public bool isFromShop;
 
-    public ItemModel(ItemSO so, bool fromShop = true) 
+    public ItemModel(ItemSO so, bool fromShop = true)
     {
         itemID = so.itemID;
+        itemName = so.itemName;
         itemType = so.itemType;
         itemSprite = so.itemSprite;
         itemRarityBG = so.itemRarityBG;
@@ -29,12 +31,13 @@ public class ItemModel
         rarity = so.itemRarity;
         quantity = so.itemQuantity;
         itemSO = so;
-        isFromShop = fromShop; 
+        isFromShop = fromShop;
     }
 
     public ItemModel(ItemSO so)
     {
         itemID = so.itemID;
+        itemName = so.itemName;
         itemType = so.itemType;
         itemSprite = so.itemSprite;
         itemRarityBG = so.itemRarityBG;
@@ -50,43 +53,41 @@ public class ItemModel
 
     public void AdjustRarity(float rarityFactor)
     {
-        Dictionary<ItemRarity, int> baseRarityValues = new Dictionary<ItemRarity, int>
+        Dictionary<ItemRarity, float> rarityThresholds = new Dictionary<ItemRarity, float>
         {
-            { ItemRarity.VeryCommon, 10 },
-            { ItemRarity.Common, 20 },
-            { ItemRarity.Rare, 30 },
-            { ItemRarity.Epic, 40 },
-            { ItemRarity.Legendary, 50 }
+            { ItemRarity.VeryCommon, 0.0f },
+            { ItemRarity.Common, 0.2f },
+            { ItemRarity.Rare, 0.4f },
+            { ItemRarity.Epic, 0.6f },
+            { ItemRarity.Legendary, 0.8f }
         };
 
-        Dictionary<ItemRarity, int> adjustedRarityValues = new Dictionary<ItemRarity, int>();
+        float veryCommonThreshold = rarityThresholds[ItemRarity.VeryCommon] + rarityFactor * 0.1f;
+        float commonThreshold = rarityThresholds[ItemRarity.Common] + rarityFactor * 0.1f;
+        float rareThreshold = rarityThresholds[ItemRarity.Rare] + rarityFactor * 0.1f;
+        float epicThreshold = rarityThresholds[ItemRarity.Epic] + rarityFactor * 0.1f;
 
-        foreach (var kvp in baseRarityValues)
+        float randomValue = Random.Range(0f, 1f);
+
+        if (randomValue >= epicThreshold)
         {
-            adjustedRarityValues[kvp.Key] = Mathf.Max(0, kvp.Value - (int)(kvp.Value * rarityFactor));
-        }
-
-        string debugString = "Rarity Factor: " + rarityFactor;
-        foreach (var kvp in adjustedRarityValues)
-        {
-            debugString += ", Adjusted " + kvp.Key + ": " + kvp.Value;
-        }
-        Debug.Log(debugString);
-
-        if (adjustedRarityValues[ItemRarity.Legendary] <= 0)
             rarity = ItemRarity.Legendary;
-        else if (adjustedRarityValues[ItemRarity.Epic] <= 0)
-            rarity = ItemRarity.Epic;
-        else if (adjustedRarityValues[ItemRarity.Rare] <= 0)
-            rarity = ItemRarity.Rare;
-        else if (adjustedRarityValues[ItemRarity.Common] <= 0)
-            rarity = ItemRarity.Common;
-        else
-            rarity = ItemRarity.Common;
-
-        if (rarity == ItemRarity.Common)
+        }
+        else if (randomValue >= rareThreshold)
         {
-            Debug.LogWarning("Rarity is Common after adjustment. This may not be intended.");
+            rarity = ItemRarity.Epic;
+        }
+        else if (randomValue >= commonThreshold)
+        {
+            rarity = ItemRarity.Rare;
+        }
+        else if (randomValue >= veryCommonThreshold)
+        {
+            rarity = ItemRarity.Common;
+        }
+        else
+        {
+            rarity = ItemRarity.VeryCommon;
         }
     }
 

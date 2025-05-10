@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LegandaryPotionSO
   m_EditorClassIdentifier: 
   itemID: CONSUMABLE_005
+  itemName: Veilshade Draught
   itemType: 1
   itemPrefab: {fileID: 6661441430022362803, guid: 6bfa226a183a9ac49a6dafd707393735, type: 3}
   itemSprite: {fileID: 1007804309772471243, guid: 6d67133758197344c84ecaf2afa248df, type: 3}

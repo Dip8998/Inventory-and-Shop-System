@@ -14,11 +14,6 @@ public class ItemController
         view.UpdateView(model);
     }
 
-    public void OnItemClicked()
-    {
-        Debug.Log("Clicked on item: " + model.itemType);
-    }
-
     public void ShowItemDetails()
     {
         uiService.ShowItemDetails(model);

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HELMET 5_0: -5136797432537231051
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
